@@ -18,6 +18,7 @@
     "@shoelace-style/shoelace": "^2.4.0",
     "@thepassle/app-tools": "^0.9.9",
     "@web-types/lit": "^2.0.0-3",
+    "eslint-plugin-lit": "^1.10.1",
     "lit": "^2.7.2",
     "urlpattern-polyfill": "^7.0.0",
     "workbox-build": "^6.5.2",
