@@ -4,6 +4,9 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"Tobermory.es6-string-html",
+				"bierner.lit-html",
+				"runem.lit-plugin",
 				"PWABuilder.pwa-studio"
 			]
 		}
