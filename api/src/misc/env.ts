@@ -1,0 +1,17 @@
+const ensureEnv = (envKey: string) => {
+    const value = process.env[envKey];
+    if (!value) {
+        throw new Error(`Environment variable ${envKey} is not set`);
+    }
+    return value;
+}
+
+export const env = {
+    db: {
+        host: ensureEnv('DB_HOST'),
+        port: parseInt(ensureEnv('DB_PORT')),
+        username: ensureEnv('DB_USERNAME'),
+        password: ensureEnv('DB_PASSWORD'),
+        database: ensureEnv('DB_DATABASE'),
+    }
+}
