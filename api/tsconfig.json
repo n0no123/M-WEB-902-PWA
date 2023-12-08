@@ -7,7 +7,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strict": true,
-    "strictPropertyInitialization": false
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "strictPropertyInitialization":  false,
+    "esModuleInterop": true,
   },
   "files": [
     "index.ts"

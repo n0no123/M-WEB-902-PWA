@@ -12,6 +12,13 @@ export const env = {
         port: parseInt(ensureEnv('DB_PORT')),
         username: ensureEnv('DB_USERNAME'),
         password: ensureEnv('DB_PASSWORD'),
-        database: ensureEnv('DB_DATABASE'),
+        database: ensureEnv('DB_NAME'),
+    },
+    api: {
+        port: parseInt(ensureEnv('API_PORT')),
+    },
+    token: {
+        secret: ensureEnv('TOKEN_SECRET'),
+        expirationTime: ensureEnv('TOKEN_EXPIRATION_TIME'),
     }
 }

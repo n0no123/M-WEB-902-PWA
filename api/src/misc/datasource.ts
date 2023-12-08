@@ -1,6 +1,8 @@
 import {DataSource} from "typeorm";
 import {env} from "./env";
 import {User} from "../models/user";
+import {Recipe} from "../models/recipe";
+import {Ingredient} from "../models/ingredient";
 
 const datasource = new DataSource({
     type: "postgres",
@@ -12,7 +14,9 @@ const datasource = new DataSource({
     synchronize: true,
     logging: "all",
     entities: [
-        User
+        User,
+        Recipe,
+        Ingredient
     ]
 });
 
