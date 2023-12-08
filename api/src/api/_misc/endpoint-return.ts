@@ -8,5 +8,6 @@ type WithoutNever<T> = {
 }
 
 export type EndpointReturn<T> = WithoutNever<T> | {
-    status: 400 | 401 | 403 | 404 | 500;
+    status: 400 | 401 | 403 | 404 | 409 | 500;
+    errorMessage: string;
 }

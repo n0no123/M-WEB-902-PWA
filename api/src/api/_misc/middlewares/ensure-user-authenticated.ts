@@ -30,11 +30,11 @@ const ensureUserAuthenticated = async (req: Request, res: Response, next: NextFu
     }
     const userId = decode(token);
 
-    if (!userId || typeof userId !== 'string') {
+    if (!userId || typeof userId !== 'object' || typeof userId.id !== 'string') {
         res.status(401).json({ message: 'Invalid token' });
         return;
     }
-    const user = await datasource.getRepository(User).findOneBy({ id: userId });
+    const user = await datasource.getRepository(User).findOneBy({ id: userId.id });
 
     if (!user) {
         res.status(401).json({ message: 'Invalid token' });

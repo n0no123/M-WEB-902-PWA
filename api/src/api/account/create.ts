@@ -17,6 +17,11 @@ type Response = {
 const create = async ({email, password}: Params): Promise<EndpointReturn<Response>> => {
     const repository = datasource.getRepository(User);
     const encryptedPassword = await hash(password, 10);
+    const userAlreadyExists = await repository.countBy({email}) > 0;
+
+    if (userAlreadyExists) {
+        return {status: 409, errorMessage: 'User already exists'};
+    }
     const createdUser = repository.create({
         email,
         password: encryptedPassword,
@@ -24,14 +29,14 @@ const create = async ({email, password}: Params): Promise<EndpointReturn<Respons
     });
     const resultUser = await repository.save(createdUser);
     const token = sign(
-        resultUser.id,
+        {id: resultUser.id},
         env.token.secret,
         {expiresIn: env.token.expirationTime}
     );
 
     return {
         status: 200,
-        body: { token }
+        body: {token}
     };
 };
 

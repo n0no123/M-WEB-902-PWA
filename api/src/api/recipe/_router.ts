@@ -24,13 +24,19 @@ router.put('/', ensureUserAuthenticated, async (req, res) => {
     }).safeParse(req.body);
 
     if (parsedParams.success) {
-        const result = await create(parsedParams.data, req.user);
+        try {
+            const result = await create(parsedParams.data, req.user);
 
-        if (result.status === 200) {
-            res.status(result.status).json(result.body);
-        } else {
-            res.status(result.status);
+            if (result.status === 200) {
+                res.status(result.status).json(result.body);
+            } else {
+                res.status(result.status).send(result.errorMessage);
+            }
+        } catch (e) {
+            console.error(e);
+            res.status(500).send();
         }
+
     } else {
         res.status(400).json(parsedParams.error);
     }

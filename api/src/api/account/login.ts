@@ -19,15 +19,15 @@ const login = async ({email, password}: Params): Promise<EndpointReturn<Response
         .findOneBy({ email });
 
     if (!user) {
-        return { status: 401 };
+        return { status: 401, errorMessage: "Invalid email or password" };
     }
-    const isPasswordValid = await compare(user.password, password);
+    const isPasswordValid = await compare(password, user.password);
 
     if (!isPasswordValid) {
-        return { status: 401 };
+        return { status: 401, errorMessage: "Invalid email or password" };
     }
     const token = sign(
-        user.id,
+        { id: user.id },
         env.token.secret,
         {expiresIn: env.token.expirationTime}
     );
