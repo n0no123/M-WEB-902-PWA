@@ -4,21 +4,7 @@ import {Router} from "express";
 import ensureUserAuthenticated from "../_misc/middlewares/ensure-user-authenticated";
 
 const router = Router();
-type IngredientDto = {
-    name: string;
-    quantityWithUnit: string;
-}
 
-type Params = {
-    name: string;
-    description: string;
-    steps: string[];
-    tags: string[];
-    cookingTimeInMinutes: number;
-    preparationTimeInMinutes: number;
-    ingredients: IngredientDto[];
-    servings: number;
-}
 
 router.put('/', ensureUserAuthenticated, async (req, res) => {
     const parsedParams = z.object({
