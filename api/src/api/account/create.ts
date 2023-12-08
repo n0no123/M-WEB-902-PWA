@@ -15,13 +15,14 @@ type Response = {
 }
 
 const create = async ({email, password}: Params): Promise<EndpointReturn<Response>> => {
+    const repository = datasource.getRepository(User);
     const encryptedPassword = await hash(password, 10);
-    const createdUser = datasource.getRepository(User).create({
+    const createdUser = repository.create({
         email,
         password: encryptedPassword,
         myRecipes: []
     });
-    const resultUser = await datasource.getRepository(User).save(createdUser);
+    const resultUser = await repository.save(createdUser);
     const token = sign(
         resultUser.id,
         env.token.secret,
