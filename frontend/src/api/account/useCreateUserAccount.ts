@@ -1,4 +1,4 @@
-import {useQuery} from "react-query";
+import {useMutation, useQuery} from "react-query";
 import {ApiError, isApiError, parseApiError} from "../_misc/api-error";
 import axiosBase from "../_misc/axios-base";
 
@@ -11,10 +11,10 @@ type Result = {
     token: string;
 };
 
-const useCreateUserAccount = ({email, password}: Params) => {
-    return useQuery<void, ApiError>(
+const useCreateUserAccount = () =>
+    useMutation<void, ApiError, Params>(
         "createUserAccount",
-        async () => {
+        async ({email, password}) => {
             const result = await axiosBase.put<Result>("/account", {
                 email,
                 password,
@@ -26,8 +26,6 @@ const useCreateUserAccount = ({email, password}: Params) => {
             localStorage.setItem("token", result.data.token);
         }
     );
-}
+
 
 export default useCreateUserAccount
-
-//TODO: needs to be refactored (createUserAccount & login) shouldnt be hooks

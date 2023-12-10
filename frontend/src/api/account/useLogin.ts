@@ -11,10 +11,10 @@ type Result = {
     token: string;
 };
 
-const useLogin = ({email, password}: Params) => {
-    return useMutation<void, ApiError>(
+const useLogin = () =>
+    useMutation<void, ApiError, Params>(
         "login",
-        async () => {
+        async ({ email, password}) => {
             const result = await axiosBase.get<Result>("/account", {
                 params: {
                     email,
@@ -28,8 +28,5 @@ const useLogin = ({email, password}: Params) => {
             localStorage.setItem("token", result.data.token);
         }
     );
-}
 
 export default useLogin;
-
-//TODO: needs to be refactored (createUserAccount & login) shouldnt be hooks
