@@ -2,7 +2,6 @@ import datasource from "./src/misc/datasource";
 import server from "./src/api/server";
 import {env} from "./src/misc/env";
 
-
 const main = async () => {
     await datasource.initialize();
     await datasource.synchronize();

@@ -1,9 +1,8 @@
-import {Column, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Ingredient} from "../../models/ingredient";
 import {User} from "../../models/user";
 import {Recipe} from "../../models/recipe";
-import datasource from "../../misc/datasource";
 import {EndpointReturn} from "../_misc/endpoint-return";
+import datasource from "../../misc/datasource";
 
 type IngredientDto = {
     name: string;
@@ -41,8 +40,7 @@ const create = async (params: Params, user: User): Promise<EndpointReturn<Return
                 name: ingredient.name,
                 quantityWithUnit: ingredient.quantityWithUnit
             })),
-        owner: user,
-        rating: 0
+        owner: user
     });
     await ingredientRepository.save(recipe.ingredients);
     const savedRecipe = await recipeRepository.save(recipe);

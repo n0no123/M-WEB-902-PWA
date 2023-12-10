@@ -1,5 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable, OneToOne, JoinColumn} from 'typeorm';
 import {Recipe} from "./recipe";
+import {Rating} from "./rating";
+import {Cookbook} from "./cookbook";
 
 @Entity()
 export class User {
@@ -25,4 +27,17 @@ export class User {
     )
     @JoinTable()
     myRecipes: Recipe[];
+
+    @OneToMany(
+        () => Rating,
+        rating => rating.user
+    )
+    ratings: Rating[];
+
+    @OneToOne(
+        () => Cookbook,
+        cookbook => cookbook.user
+    )
+    @JoinColumn()
+    cookbook: Cookbook;
 }

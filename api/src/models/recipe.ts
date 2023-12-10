@@ -1,6 +1,7 @@
 import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Ingredient} from "./ingredient";
 import {User} from "./user";
+import {Rating} from "./rating";
 
 @Entity()
 export class Recipe {
@@ -45,16 +46,10 @@ export class Recipe {
 
     @OneToMany(
         () => Ingredient,
-        ingredient => ingredient.recipe
+        ingredient => ingredient.recipe,
     )
     @JoinColumn()
     ingredients: Ingredient[];
-
-    @Column({
-        nullable: false,
-        type: "float8"
-    })
-    rating: number;
 
     @ManyToOne(
         () => User,
@@ -67,4 +62,10 @@ export class Recipe {
         type: "integer"
     })
     servings: number;
+
+    @OneToMany(
+        () => Rating,
+        rating => rating.recipe
+    )
+    ratings: Rating[];
 }

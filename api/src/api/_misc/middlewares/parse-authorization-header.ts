@@ -11,10 +11,14 @@ declare global {
     }
 }
 
-const ensureUserAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
+const parseAuthorizationHeader = (optional: boolean) => async (req: Request, res: Response, next: NextFunction) => {
     const authorizationHeader = req.headers.authorization;
 
     if (!authorizationHeader) {
+        if (optional) {
+            next();
+            return;
+        }
         res.status(401).json({ message: 'Missing authorization header' });
         return;
     }
@@ -44,4 +48,4 @@ const ensureUserAuthenticated = async (req: Request, res: Response, next: NextFu
     next();
 }
 
-export default ensureUserAuthenticated;
+export default parseAuthorizationHeader;
