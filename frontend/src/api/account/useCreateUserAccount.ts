@@ -29,3 +29,5 @@ const useCreateUserAccount = ({email, password}: Params) => {
 }
 
 export default useCreateUserAccount
+
+//TODO: needs to be refactored (createUserAccount & login) shouldnt be hooks
