@@ -1,6 +1,6 @@
-import axios, {AxiosError} from "axios";
 import {useQuery} from "react-query";
 import {ApiError, isApiError, parseApiError} from "../_misc/api-error";
+import axiosBase from "../_misc/axios-base";
 
 type Params = {
     email: string;
@@ -15,7 +15,7 @@ const useCreateUserAccount = ({email, password}: Params) => {
     return useQuery<void, ApiError>(
         "createUserAccount",
         async () => {
-            const result = await axios.put<Result>("/account", {
+            const result = await axiosBase.put<Result>("/account", {
                 email,
                 password,
             }).catch(parseApiError);
