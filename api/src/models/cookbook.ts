@@ -15,5 +15,5 @@ export class Cookbook {
 
     @ManyToMany(() => Recipe)
     @JoinTable()
-    recipe: Recipe[];
+    recipes: Recipe[];
 }

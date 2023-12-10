@@ -3,6 +3,8 @@ import {Router} from 'express';
 import create from "./create";
 import login from "./login"
 
+import cookbookRouter from "./cookbook/_router";
+
 const router = Router();
 
 router.put('/', async (req, res) => {
@@ -52,5 +54,7 @@ router.get('/', async (req, res) => {
         res.status(400).json(parsedParams.error);
     }
 });
+
+router.use('/cookbook', cookbookRouter);
 
 export default router;
