@@ -1,8 +1,11 @@
-import {useMemo} from "react";
+const useLogout = () =>
+    ({
+        mutate: () => {
+            const localStorageItem = localStorage.getItem("token");
 
-const useLogout = () => {
-    const localStorageItem = localStorage.getItem("token");
+            if (localStorageItem !== null)
+                localStorage.removeItem("token");
+        }
+    });
 
-    if (localStorageItem !== null)
-        localStorage.removeItem("token");
-}
+export default useLogout;
