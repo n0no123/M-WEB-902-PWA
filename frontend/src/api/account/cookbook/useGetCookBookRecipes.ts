@@ -8,7 +8,7 @@ type Return = {
 
 const useGetCookBookRecipes = () =>
     useQuery<Return, Error>(
-        ["cookbook", "recipes"],
+        "getCookBookRecipes",
         async () => {
             const result = await axiosBase
                 .get<Return>("/cookbook")
