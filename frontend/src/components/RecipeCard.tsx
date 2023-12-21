@@ -2,13 +2,14 @@ import { CSSProperties } from 'react';
 import '../styles/base.css'
 import '../styles/main.css'
 
-type ReceipeCardProps = {
+type Props = {
+    id: string,
     image: string,
-    title: string,
-    rating: number
+    name: string,
+    rating: number,
 }
 
-const ReceipeCardStyle: CSSProperties = {
+const CardStyle: CSSProperties = {
     backgroundColor: 'var(--color-neutral-white)',
     borderRadius: '1em',
     height: '15em',
@@ -32,16 +33,16 @@ const RatingStyle: CSSProperties = {
     marginLeft: '0.5em'
 }
 
-function ReceipeCard({ image, title, rating }: ReceipeCardProps) {
+function RecipeCard({ id, image, name, rating }: Props) {
     return (
-        <div style={ReceipeCardStyle} className='flex-v clickable'>
+        <div style={CardStyle} className='flex-v clickable' onClick={() => console.log(`recipeId: ${id}`)}>
             <img src={`${process.env.PUBLIC_URL}/assets/${image}`} alt="velouté de giraumon" style={ImageStyle} />
             <div>
-                <h3 style={TitleStyle}>{title}</h3>
+                <h3 style={TitleStyle}>{name}</h3>
                 <p style={RatingStyle}>{rating}</p>
             </div>
         </div>
     );
 }
 
-export default ReceipeCard;
+export default RecipeCard;

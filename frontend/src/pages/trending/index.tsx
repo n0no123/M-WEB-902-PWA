@@ -1,85 +1,7 @@
 import { CSSProperties } from "react";
 import Header from "../../components/Header";
-import ReceipeCard from "../../components/ReceipeCard";
-
-const mockData = [
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-  {
-    image: 'veloute-de-giraumon.jpg',
-    title: 'Velouté de giraumon',
-    rating: 4.7
-  },
-]
+import RecipeCard from "../../components/RecipeCard";
+import useLookupRecipes from "../../api/recipe/useLookupRecipes";
 
 const GridStyle: CSSProperties = {
   display: 'grid',
@@ -92,12 +14,15 @@ const GridStyle: CSSProperties = {
 }
 
 function Trending() {
+
+  const {data} = useLookupRecipes();
+
   return (
     <div>
       <Header />
         <div className='centered' style={GridStyle}>
           {
-            mockData.map((e, index) => <ReceipeCard key={index} image={e.image} title={e.title} rating={e.rating} />)
+            data?.map((e, index) => <RecipeCard key={index} id={e.id} image={'veloute-de-giraumon.jpg'} name={e.name} rating={e.avgRating} />)
           }
       </div>
     </div>
