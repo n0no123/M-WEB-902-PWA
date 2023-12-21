@@ -2,7 +2,7 @@ import {useMutation} from "react-query";
 import {ApiError, isApiError, parseApiError} from "../_misc/api-error";
 import axiosBase from "../_misc/axios-base";
 
-type IngredientDto = {
+export type IngredientDto = {
     name: string;
     quantityWithUnit: string;
 }

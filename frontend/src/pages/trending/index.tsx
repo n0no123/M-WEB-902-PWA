@@ -2,6 +2,7 @@ import { CSSProperties } from "react";
 import Header from "../../components/Header";
 import RecipeCard from "../../components/RecipeCard";
 import useLookupRecipes from "../../api/recipe/useLookupRecipes";
+import CreateRecipe from "../../components/CreateRecipe";
 
 const GridStyle: CSSProperties = {
   display: 'grid',
@@ -21,6 +22,7 @@ function Trending() {
   return (
     <div>
       <Header />
+      <CreateRecipe />
         <div className='centered' style={GridStyle}>
           {
             data?.map((e, index) => <RecipeCard key={index} id={e.id} image={'veloute-de-giraumon.jpg'} name={e.name} rating={e.avgRating} />)
