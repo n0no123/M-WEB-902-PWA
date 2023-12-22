@@ -13,7 +13,7 @@ const useRateRecipe = () =>
         "rateRecipe",
         async ({recipeId, rating}) => {
             const res = await axiosBase
-                .put("/recipe/" + recipeId, {rating})
+                .put("/recipe/rate/" + recipeId, {rating})
                 .catch(parseApiError);
 
             if (isApiError(res)) {

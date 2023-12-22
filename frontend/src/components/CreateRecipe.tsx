@@ -17,7 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useCallback, useEffect, useState} from "react";
 
 const CreateRecipe = () => {
-    const {mutate, isLoading, isSuccess} = useCreateRecipe();
+    const {mutate, isLoading, isSuccess, isError, error: mutationError} = useCreateRecipe();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [currentlyEditedStep, setCurrentlyEditedStep] = useState<string>("");
     const [currentlyEditedIngredientQuantityWithUnit, setCurrentlyEditedIngredientQuantityWithUnit] = useState<string>("");
@@ -97,7 +97,6 @@ const CreateRecipe = () => {
         },
         [isSuccess]
     );
-    console.log(preparationTime);
     return <>
         <Dialog
             open={isDialogOpen}
@@ -294,7 +293,7 @@ const CreateRecipe = () => {
                 <Typography>
                     {tags.join(", ")}
                 </Typography>
-                {error && <Alert severity={"error"}>{error}</Alert>}
+                {(error || mutationError) && <Alert severity={"error"}>{error}{mutationError?.errorMessage}</Alert>}
             </DialogContent>
             <DialogActions>
                 <Button
