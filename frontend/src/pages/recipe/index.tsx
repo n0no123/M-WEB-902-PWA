@@ -13,11 +13,12 @@ import {
     Skeleton,
     Slider,
     Stack,
-    Typography
+    Typography, useMediaQuery
 } from "@mui/material";
 import useRateRecipe from "../../api/recipe/useRateRecipe";
 import EditRecipe from "../../components/EditRecipe";
 import useIsLoggedIn from "../../api/account/useIsLoggedIn";
+import {useTheme} from '@mui/material/styles';
 
 type RatingDialogProps = {
     currentRating: number | undefined,
@@ -102,7 +103,6 @@ const styles: Record<string, CSSProperties> = {
         padding: "1em",
         transform: "translateX(-50%)",
         position: "relative",
-        width: "50%",
         minHeight: "calc(100% - 4em)",
         backgroundColor: "white",
         borderRadius: "1em",
@@ -135,12 +135,17 @@ const VisualizeRecipe = () => {
     const {id} = useParams();
     const {data, isLoading, isError, isIdle, error} = useGetRecipeById({recipeId: id ?? ""});
     const {data: isLoggedIn} = useIsLoggedIn();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     if (id === "" || id === undefined)
         return <Typography>No recipe id provided</Typography>
     if (isLoading || isIdle)
         return <Box sx={styles.container}>
-            <Stack sx={styles.root}>
+            <Stack sx={{
+                width: isMobile ? "100%" : "50%",
+                ...(styles.root)
+            }}>
                 <Skeleton
                     variant={"text"}
                     sx={{
@@ -169,9 +174,12 @@ const VisualizeRecipe = () => {
             </Stack>
         </Box>;
     if (isError)
-        return <Typography>{JSON.stringify(error)}</Typography> //TODO: error page
+        return <Typography>{JSON.stringify(error)}</Typography>
     return <Box sx={styles.container}>
-        <Stack sx={styles.root}>
+        <Stack sx={{
+            width: isMobile ? "100%" : "50%",
+            ...(styles.root)
+        }}>
             <Link to={"/"}>{"<"} Go back to trending</Link>
             {
                 data.owner &&
@@ -188,7 +196,7 @@ const VisualizeRecipe = () => {
                     justifyContent: "center",
                 }}
             >
-                <img src={"https://picsum.photos/500/300"} height={300} width={500} alt={"decorative image"}/>
+                <img src={"https://picsum.photos/500/300"} height={225} width={375} alt={"decorative image"}/>
             </Box>
             <Stack>
                 <Stack
