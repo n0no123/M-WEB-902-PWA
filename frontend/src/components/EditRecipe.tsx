@@ -8,7 +8,7 @@ import {
     Stack,
     TextField,
     IconButton,
-    Typography
+    Typography, Alert
 } from "@mui/material";
 import React, {CSSProperties, useCallback, useEffect, useState} from "react";
 import {IngredientDto} from "../api/recipe/useCreateRecipe";
@@ -248,6 +248,10 @@ const EditRecipe = ({recipeId, defaultValues}: EditRecipeProps) => {
                         </IconButton>
                     </Stack>
                     <Typography sx={styles.typography}>{ tags.join(", ") }</Typography>
+                    {
+                        (error || mutationError) &&
+                        <Alert severity={"error"}>{ error ?? mutationError?.errorMessage }</Alert>
+                    }
                 </Stack>
             </DialogContent>
             <DialogActions>
