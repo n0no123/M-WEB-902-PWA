@@ -9,12 +9,12 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    Divider, Skeleton, Slider,
+    Divider,
+    Skeleton,
+    Slider,
     Stack,
     Typography
 } from "@mui/material";
-import StarIcon from '@mui/icons-material/Star';
-import HalfStarIcon from '@mui/icons-material/StarHalf';
 import useRateRecipe from "../../api/recipe/useRateRecipe";
 import EditRecipe from "../../components/EditRecipe";
 import useIsLoggedIn from "../../api/account/useIsLoggedIn";
@@ -97,10 +97,11 @@ const RatingDialog = ({currentRating, recipeId}: RatingDialogProps) => {
 
 const styles: Record<string, CSSProperties> = {
     root: {
+        gap: 2,
         left: "50%",
         padding: "1em",
         transform: "translateX(-50%)",
-        position: "absolute",
+        position: "relative",
         width: "50%",
         minHeight: "calc(100% - 4em)",
         backgroundColor: "white",
@@ -113,8 +114,6 @@ const styles: Record<string, CSSProperties> = {
     description: {
         width: "100%",
         wordBreak: "break-word",
-        paddingBottom: "1em",
-        paddingTop: "1em"
     },
     rateButton: {
         width: "fit-content"
@@ -135,7 +134,7 @@ const styles: Record<string, CSSProperties> = {
 const VisualizeRecipe = () => {
     const {id} = useParams();
     const {data, isLoading, isError, isIdle, error} = useGetRecipeById({recipeId: id ?? ""});
-    const { data: isLoggedIn } = useIsLoggedIn();
+    const {data: isLoggedIn} = useIsLoggedIn();
 
     if (id === "" || id === undefined)
         return <Typography>No recipe id provided</Typography>
@@ -182,57 +181,126 @@ const VisualizeRecipe = () => {
                 />
             }
             <Typography variant="h1" sx={styles.name}>{data.name}</Typography>
+            <Box
+                sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                }}
+            >
+                <img src={"https://picsum.photos/500/300"} height={300} width={500} alt={"decorative image"}/>
+            </Box>
             <Stack>
-                <Stack direction={"row"} alignItems={"center"}>
-                    <Typography variant={"body1"}>Average rating:</Typography>
+                <Stack
+                    sx={{
+                        width: "80%",
+                        backgroundColor: "#ededed",
+                        borderRadius: ".5em",
+                        padding: "1em",
+                        gap: 1,
+                        margin: "auto"
+                    }}
+                >
+                    <Typography sx={{fontWeight: "bold"}}>
+                        Average rating :{" "}
+                        <Typography
+                            component={"span"}
+                        >
+                            {
+                                data.avgRating !== -1 ?
+                                    `${data.avgRating} / 5` :
+                                    "No rating yet"
+                            }
+                        </Typography>
+                    </Typography>
                     {
-                        data.avgRating === -1 ?
-                            <Typography variant={"body1"}>No rating yet</Typography> :
-                            <Stack direction={"row"} alignItems={"center"}>
-                                {
-                                    new Array(Math.floor(data.avgRating)).fill(StarIcon).concat(
-                                        data.avgRating % 1 === 0 ? [] : [HalfStarIcon]
-                                    )
-                                }
+                        isLoggedIn && <>
+                            <Divider/>
+                            <Stack
+                                direction={"row"}
+                                alignItems={"center"}
+                                justifyContent={"space-between"}
+                            >
+                                <Typography sx={{fontWeight: "bold"}}>
+                                    Your rating :{" "}
+                                    <Typography
+                                        component={"span"}
+                                    >
+                                        {
+                                            data.yourRating !== undefined ?
+                                                `${data.yourRating} / 5` :
+                                                "You havent rated this recipe yet"
+                                        }
+                                    </Typography>
+                                </Typography>
+                                <RatingDialog currentRating={data.yourRating} recipeId={id}/>
                             </Stack>
+                        </>
                     }
                 </Stack>
-                <Stack direction={"row"} alignItems={"center"}>
-                    <Typography variant={"body1"}>Your rating:</Typography>
-                    {
-                        data.yourRating === undefined ?
-                            <Typography variant={"body1"}>You havent rated this recipe yet</Typography> :
-                            <Stack direction={"row"} alignItems={"center"}>
-                                {
-                                    new Array(Math.floor(data.yourRating)).fill(StarIcon).concat(
-                                        data.yourRating % 1 === 0 ? [] : [HalfStarIcon]
-                                    )
-                                }
-                            </Stack>
-                    }
-                </Stack>
-                {
-                    isLoggedIn &&
-                    <RatingDialog currentRating={data.yourRating} recipeId={id}/>
-                }
             </Stack>
-            <Typography variant={"body1"} sx={styles.description}>{data.description.repeat(100)}</Typography>
-            <Typography variant={"body1"}>Preparation time: {data.preparationTimeInMinutes}mn</Typography>
-            <Typography variant={"body1"}>Cooking time: {data.cookingTimeInMinutes}mn</Typography>
-            <Typography variant={"body1"}>Total preparation time: {data.totalPreparationTimeInMinutes}mn</Typography>
+            <Typography variant={"body1"} sx={styles.description}>{data.description}</Typography>
             <Typography variant={"body1"}>Number of
                 servings: {data.servings}pp{data.servings > 0 ? "s" : ""}</Typography>
             <Divider>Ingredients</Divider>
             {
                 data.ingredients.map(
-                    (ingredient, index) =>
+                    ingredient =>
                         <Typography
-                            sx={styles.wrappedTypography}>{index}. {ingredient.quantityWithUnit} {ingredient.name}</Typography>
+                            sx={styles.wrappedTypography}
+                        >
+                            {ingredient.quantityWithUnit} {ingredient.name}
+                        </Typography>
                 )
             }
-            <Divider>Preparation steps</Divider>
+            <Divider>Preparation</Divider>
+            <Stack
+                sx={{
+                    width: "80%",
+                    backgroundColor: "#ededed",
+                    borderRadius: ".5em",
+                    padding: "1em",
+                    gap: 1,
+                    alignItems: "center",
+                    margin: "auto"
+                }}
+            >
+                <Box>
+                    <Typography sx={{fontWeight: "bold"}}>
+                        Total time :{" "}
+                        <Typography
+                            variant={"body1"}
+                            component={"span"}
+                        >
+                            {data.totalPreparationTimeInMinutes}mn
+                        </Typography>
+                    </Typography>
+                </Box>
+                <Divider sx={{width: "100%"}}/>
+                <Stack
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                    sx={{
+                        width: "75%",
+                    }}
+                >
+                    <Typography sx={{fontWeight: "bold"}}>
+                        Preparation time :
+                        <Typography textAlign={"center"}>{data.preparationTimeInMinutes}mn</Typography>
+                    </Typography>
+                    <Typography sx={{fontWeight: "bold"}}>
+                        Cooking time :
+                        <Typography textAlign={"center"}>{data.cookingTimeInMinutes}mn</Typography>
+                    </Typography>
+                </Stack>
+            </Stack>
             {
-                data.steps.map((step, index) => <Typography sx={styles.wrappedTypography}>{index}. {step}</Typography>)
+                data.steps.map((step, index) =>
+                    <Stack>
+                        <Typography fontWeight={"600"}>STEP {index}</Typography>
+                        <Typography sx={styles.wrappedTypography}>{step}</Typography>
+                    </Stack>
+                )
             }
             <Divider>Tags</Divider>
             <Typography sx={styles.wrappedTypography}>{data.tags.join(", ")}</Typography>
