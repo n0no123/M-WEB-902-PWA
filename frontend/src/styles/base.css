@@ -1,0 +1,10 @@
+:root {
+    --color-primary: #FF6F61;
+    --color-neutral-black: #000000;
+    --color-neutral-white: #FFFFFF;
+    --color-neutral-grey: #EFEFEF;
+}
+
+body {
+    background-color: var(--color-neutral-grey)
+}

@@ -26,6 +26,7 @@ type Return = {
     yourRating: number | undefined;
     ownerId: string;
     servings: number;
+    owner: boolean;
 }
 
 const getById = async (params: Params, user?: User): Promise<EndpointReturn<Return>> => {
@@ -59,12 +60,13 @@ const getById = async (params: Params, user?: User): Promise<EndpointReturn<Retu
             })),
             avgRating: (recipe.ratings.length) > 0 ?
                 recipe.ratings.reduce((acc, curr) => acc + curr.rating, 0) / recipe.ratings.length :
-                0,
+                -1,
             yourRating: user ?
                 recipe.ratings.find(rating => rating.user.id === user.id)?.rating :
                 undefined,
             ownerId: recipe.owner.id,
-            servings: recipe.servings
+            servings: recipe.servings,
+            owner: user ? recipe.owner.id === user.id : false
         }
     }
 }

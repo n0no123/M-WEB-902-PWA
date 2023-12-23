@@ -13,7 +13,7 @@ router.put(
     parseAuthorizationHeader(false),
     async (req, res) => {
         const parsedParams = z.object({
-            recipeId: z.string(),
+            recipeId: z.string().uuid(),
         }).safeParse(req.params);
 
         if (parsedParams.success) {
@@ -40,7 +40,7 @@ router.delete(
     parseAuthorizationHeader(false),
     async (req, res) => {
         const parsedParams = z.object({
-            recipeId: z.string(),
+            recipeId: z.string().uuid(),
         }).safeParse(req.params);
 
         if (parsedParams.success) {

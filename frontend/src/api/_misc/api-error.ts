@@ -20,6 +20,7 @@ export const parseApiError = (err: AxiosError): ApiError => {
         };
     } else {
         // Something happened in setting up the request that triggered an Error
+        console.error(err);
         return {
             status: 500,
             errorMessage: "Error setting up request",

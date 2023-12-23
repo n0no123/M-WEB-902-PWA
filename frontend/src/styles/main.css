@@ -1,0 +1,27 @@
+@import url("base.css");
+
+.centered {
+    justify-content: center;
+}
+
+.clickable {
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: box-shadow 0.3s ease-out;
+}
+
+.clickable:hover {
+    background-color: var(--color-neutral-grey);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: box-shadow 0.3s ease-in;
+}
+
+.flex-h {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-v {
+    display: flex;
+    flex-direction: column;
+}

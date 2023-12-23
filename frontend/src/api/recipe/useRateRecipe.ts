@@ -8,12 +8,12 @@ type Params = {
     rating: 0 | 1 | 2 | 3 | 4 | 5;
 }
 
-const useCreateRecipe = () =>
+const useRateRecipe = () =>
     useMutation<void, ApiError, Params>(
         "rateRecipe",
         async ({recipeId, rating}) => {
             const res = await axiosBase
-                .put("/recipe/" + recipeId, {rating})
+                .put("/recipe/rate/" + recipeId, {rating})
                 .catch(parseApiError);
 
             if (isApiError(res)) {
@@ -22,4 +22,4 @@ const useCreateRecipe = () =>
         }
     );
 
-export default useCreateRecipe;
+export default useRateRecipe;

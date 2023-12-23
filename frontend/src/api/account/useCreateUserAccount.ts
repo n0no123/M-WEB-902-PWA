@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from "react-query";
+import {useMutation} from "react-query";
 import {ApiError, isApiError, parseApiError} from "../_misc/api-error";
 import axiosBase from "../_misc/axios-base";
 
