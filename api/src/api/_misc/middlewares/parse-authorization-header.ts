@@ -38,7 +38,10 @@ const parseAuthorizationHeader = (optional: boolean) => async (req: Request, res
         res.status(401).json({ message: 'Invalid token' });
         return;
     }
-    const user = await datasource.getRepository(User).findOneBy({ id: userId.id });
+    const user = await datasource.getRepository(User).findOne({
+        where: {id: userId.id},
+        relations: ["ratings", "cookbook", "myRecipes"]
+    }, );
 
     if (!user) {
         res.status(401).json({ message: 'Invalid token' });
