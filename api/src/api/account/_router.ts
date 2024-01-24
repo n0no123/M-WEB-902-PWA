@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
     const parsedParams = z.object({
         email: z.string(),
         password: z.string(),
-    }).safeParse(req.params);
+    }).safeParse(req.query);
 
     if (parsedParams.success) {
         try {
