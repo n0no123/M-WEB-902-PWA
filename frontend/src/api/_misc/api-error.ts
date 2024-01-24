@@ -10,7 +10,7 @@ export const parseApiError = (err: AxiosError): ApiError => {
         // Request made and server responded
         return {
             status: (err.response.status as ApiError["status"]),
-            errorMessage: err.response.data as string,
+            errorMessage: (err.response.data as { errorMessage: string }).errorMessage,
         };
     } else if (err.request) {
         // The request was made but no response was received

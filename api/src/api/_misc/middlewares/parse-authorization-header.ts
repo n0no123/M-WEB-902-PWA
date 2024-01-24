@@ -44,7 +44,7 @@ const parseAuthorizationHeader = (optional: boolean) => async (req: Request, res
     }, );
 
     if (!user) {
-        res.status(401).json({ message: 'Invalid token' });
+        res.status(401).json({ errorMessage: 'Invalid token' });
         return;
     }
     req.user = user;
