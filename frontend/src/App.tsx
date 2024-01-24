@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/base.css';
+import Trending from './pages/trending';
+import React from "react";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Recipe from "./pages/recipe";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () =>
+    <Router>
+        <Routes>
+            <Route path="/">
+                <Route index element={<Trending/>}/>
+                <Route path="recipe/:id" element={<Recipe />}/>
+            </Route>
+        </Routes>
+      </Router>;
 
 export default App;

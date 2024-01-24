@@ -8,6 +8,7 @@ export type IngredientDto = {
 }
 
 type Params = {
+    id: string;
     name: string;
     description: string;
     steps: string[];
@@ -18,16 +19,14 @@ type Params = {
     servings: number;
 }
 
-type Return = {
-    id: string;
-}
+type Return = void;
 
-const useCreateRecipe = () =>
+const useEditRecipe = () =>
     useMutation<Return, ApiError, Params>(
         "createRecipe",
         async (params) => {
             const res = await axiosBase
-                .put<Return>("/recipe/", params)
+                .put<Return>(`/recipe/${params.id}`, params)
                 .catch(parseApiError);
 
             if (isApiError(res)) {
@@ -37,4 +36,4 @@ const useCreateRecipe = () =>
         }
     );
 
-export default useCreateRecipe;
+export default useEditRecipe;

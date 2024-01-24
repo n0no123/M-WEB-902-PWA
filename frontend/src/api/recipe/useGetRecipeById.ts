@@ -25,6 +25,7 @@ type Return = {
     yourRating: number | undefined;
     ownerId: string;
     servings: number;
+    owner: boolean
 }
 
 const useGetRecipeById = ({ recipeId }: Params) =>
