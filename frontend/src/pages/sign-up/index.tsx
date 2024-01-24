@@ -10,11 +10,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import useCreateUserAccount from '../../api/account/useCreateUserAccount';
+import { useNavigate } from "react-router-dom";
 
 
 export default function SignUp() {
 
     const hook = useCreateUserAccount();
+    const navigate = useNavigate();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -25,6 +27,10 @@ export default function SignUp() {
             hook.mutate({ email: email.toString(), password: password.toString() });
         }
     };
+
+    if (hook.isSuccess) {
+        navigate('/sign-in');
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -74,7 +80,7 @@ export default function SignUp() {
                     </Button>
                     <Grid container>
                         <Grid item>
-                            <Link href="http://localhost:3000/sign-in" variant="body2">
+                            <Link href="/sign-in" variant="body2">
                                 {"Already have an account? Sign In"}
                             </Link>
                         </Grid>
