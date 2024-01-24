@@ -18,7 +18,6 @@ function Trending() {
 
   const {data} = useLookupRecipes();
 
-  console.log(data);
   return (
     <div>
       <Header />

@@ -1,6 +1,7 @@
 @import url("base.css");
 
 .centered {
+    align-items: center;
     justify-content: center;
 }
 

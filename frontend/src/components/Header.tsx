@@ -1,6 +1,4 @@
 import { CSSProperties } from 'react';
-import '../styles/base.css'
-import '../styles/main.css'
 
 const HeaderStyle: CSSProperties = {
     backgroundColor: 'var(--color-neutral-white)',

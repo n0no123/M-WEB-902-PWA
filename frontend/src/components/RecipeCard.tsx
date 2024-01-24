@@ -1,6 +1,4 @@
 import { CSSProperties } from 'react';
-import '../styles/base.css'
-import '../styles/main.css'
 
 type Props = {
     id: string,
