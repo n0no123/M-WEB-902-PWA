@@ -9,12 +9,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import useCreateUserAccount from '../../api/account/useCreateUserAccount';
+import useLogin from '../../api/account/useLogin';
 
 
 export default function SignUp() {
 
-    const hook = useCreateUserAccount();
+    const hook = useLogin();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -41,7 +41,7 @@ export default function SignUp() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign Up
+                    Sign In
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
@@ -70,12 +70,12 @@ export default function SignUp() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign Up
+                        Sign In
                     </Button>
                     <Grid container>
                         <Grid item>
-                            <Link href="http://localhost:3000/sign-in" variant="body2">
-                                {"Already have an account? Sign In"}
+                            <Link href="http://localhost:3000/sign-up" variant="body2">
+                                {"Don't have an account yet? Sign Up"}
                             </Link>
                         </Grid>
                     </Grid>

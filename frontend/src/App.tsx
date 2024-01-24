@@ -1,6 +1,7 @@
 import './styles/base.css';
 import Trending from './pages/trending';
 import SignUp from './pages/sign-up';
+import SignIn from './pages/sign-in';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Recipe from "./pages/recipe";
 
@@ -9,6 +10,7 @@ const App = () =>
         <Routes>
             <Route path="/">
                 <Route path="/sign-up" element={<SignUp />} />
+                <Route path="/sign-in" element={<SignIn />} />
                 <Route index element={<Trending />} />
                 <Route path="recipe/:id" element={<Recipe />} />
             </Route>
