@@ -41,9 +41,9 @@ const CreateRecipe = () => {
                 setError("Name is required");
             else if (!description)
                 setError("Description is required");
-            if (!preparationTime)
+            if (preparationTime === undefined)
                 setError("Preparation time is required");
-            else if (!cookingTime)
+            else if (cookingTime === undefined)
                 setError("Cooking time is required");
             else if (!servings)
                 setError("Servings is required");
