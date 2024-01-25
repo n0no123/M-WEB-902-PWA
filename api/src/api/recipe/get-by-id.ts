@@ -34,7 +34,7 @@ const getById = async (params: Params, user?: User): Promise<EndpointReturn<Retu
 
     const recipe = await recipeRepository.findOne({
         where: {id: params.recipeId },
-        relations: ["owner", "ingredients", "ratings"]
+        relations: ["owner", "ingredients", "ratings", "ratings.user"]
     });
 
     if (!recipe) {
