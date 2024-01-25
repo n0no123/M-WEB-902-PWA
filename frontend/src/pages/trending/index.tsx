@@ -9,7 +9,6 @@ const GridStyle: CSSProperties = {
   gap: '2em',
   gridTemplateColumns: 'repeat(auto-fit, minmax(21.5em, 1fr))',
   margin: 'auto',
-  maxWidth: '75%',
   paddingTop: '2em',
   placeItems: 'center'
 }
@@ -28,16 +27,14 @@ function Trending() {
       setMessage('An error has occured.');
     }
   }, [lookupRecipes]);
-  
+
   return (
     <>
-      <div>
-        <Header />
-        <div className='centered' style={GridStyle}>
-          {
-            (recipes ?? []).map((e, index) => <RecipeCard key={index} id={e.id} image={'/assets/veloute-de-giraumon.jpg'} name={e.name} rating={e.avgRating} />)
-          }
-        </div>
+      <Header />
+      <div className='centered' style={GridStyle}>
+        {
+          (recipes ?? []).map((e, index) => <RecipeCard key={index} id={e.id} image={'/assets/veloute-de-giraumon.jpg'} name={e.name} rating={e.avgRating} />)
+        }
       </div>
       <Error open={open} message={message} setOpen={setOpen} setMessage={setMessage} />
     </>

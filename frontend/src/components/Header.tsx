@@ -15,7 +15,6 @@ export default function Header() {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-
     const logout = useLogout();
     const isLoggedIn = useIsLoggedIn()
 
