@@ -9,7 +9,7 @@ export class Rating {
 
     @Column({
         nullable: false,
-        type: "integer",
+        type: "float4",
     })
     rating: number;
 
