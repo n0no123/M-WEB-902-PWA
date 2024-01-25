@@ -14,10 +14,15 @@ import {
 } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useCallback, useEffect, useState } from "react";
 
-const CreateRecipe = () => {
-    const { mutate, isLoading, isSuccess, isError, error: mutationError } = useCreateRecipe();
+type Props = {
+    isMobile: boolean
+};
+
+const CreateRecipe = ({ isMobile }: Props) => {
+    const { mutate, isLoading, isSuccess, error: mutationError } = useCreateRecipe();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [currentlyEditedStep, setCurrentlyEditedStep] = useState<string>("");
     const [currentlyEditedIngredientQuantityWithUnit, setCurrentlyEditedIngredientQuantityWithUnit] = useState<string>("");
@@ -312,13 +317,20 @@ const CreateRecipe = () => {
                 </Button>
             </DialogActions>
         </Dialog>
-        <Button
-            color="inherit"
-            endIcon={<AddIcon />}
-            onClick={() => setIsDialogOpen(true)}
-        >
-            Add Recipe
-        </Button>
+        {
+            isMobile ?
+                <IconButton color="inherit" onClick={() => setIsDialogOpen(true)}>
+                    <AddCircleOutlineIcon />
+                </IconButton>
+                :
+                <Button
+                    color="inherit"
+                    endIcon={<AddIcon />}
+                    onClick={() => setIsDialogOpen(true)}
+                >
+                    Add Recipe
+                </Button>
+        }
     </>;
 }
 

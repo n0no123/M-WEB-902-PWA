@@ -2,8 +2,6 @@ import { CSSProperties, useMemo, useState } from "react";
 import Header from "../../components/Header";
 import RecipeCard from "../../components/RecipeCard";
 import useLookupRecipes from "../../api/recipe/useLookupRecipes";
-import useIsLoggedIn from "../../api/account/useIsLoggedIn";
-import { useNavigate } from "react-router-dom";
 import Error from "../../components/Error";
 
 const GridStyle: CSSProperties = {
@@ -21,8 +19,6 @@ function Trending() {
   const [message, setMessage] = useState<string>('');
 
   const lookupRecipes = useLookupRecipes();
-  const auth = useIsLoggedIn();
-  const navigate = useNavigate();
 
   const recipes = useMemo(() => {
     if (lookupRecipes.isSuccess) {
@@ -32,10 +28,6 @@ function Trending() {
       setMessage('An error has occured.');
     }
   }, [lookupRecipes]);
-
-  if (!auth.data) {
-    navigate('/sign-in')
-  }
   
   return (
     <>

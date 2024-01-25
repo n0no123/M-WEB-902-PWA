@@ -2,8 +2,6 @@ import { CSSProperties, useMemo, useState } from "react";
 import Header from "../../components/Header";
 import RecipeCard from "../../components/cookbook/RecipeCard";
 import useGetCookBookRecipes from "../../api/account/cookbook/useGetCookBookRecipes";
-import useIsLoggedIn from "../../api/account/useIsLoggedIn";
-import { useNavigate } from "react-router-dom";
 import Error from "../../components/Error";
 
 const GridStyle: CSSProperties = {
@@ -21,8 +19,6 @@ function Cookbook() {
     const [message, setMessage] = useState<string>('');
 
     const getCookBookRecipes = useGetCookBookRecipes();
-    const auth = useIsLoggedIn();
-    const navigate = useNavigate();
 
     const recipeIds = useMemo(() => {
         if (getCookBookRecipes.isSuccess) {
@@ -32,10 +28,6 @@ function Cookbook() {
             setMessage('An error has occured.');
         }
     }, [getCookBookRecipes]);
-
-    if (!auth.data) {
-        navigate('/sign-in')
-    }
 
     return (
         <>
