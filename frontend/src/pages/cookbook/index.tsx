@@ -1,18 +1,9 @@
 import Header from "../../components/Header";
-import RecipeCard from "../../components/RecipeCard";
+import RecipeCard from "../../components/cookbook/RecipeCard";
 import useIsLoggedIn from "../../api/account/useIsLoggedIn";
 import { useNavigate } from "react-router-dom";
 import { CSSProperties } from "react";
-
-type RecipeData = {
-    id: string;
-    name: string;
-    tags: string[];
-    totalPreparationTimeInMinutes: number;
-    avgRating: number;
-    ownerId: string;
-    servings: number;
-}
+import useGetCookBookRecipes from "../../api/account/cookbook/useGetCookBookRecipes";
 
 const GridStyle: CSSProperties = {
     display: 'grid',
@@ -25,7 +16,6 @@ const GridStyle: CSSProperties = {
 }
 
 function Cookbook() {
-    const data: Array<RecipeData> = [];
     const auth = useIsLoggedIn();
     const navigate = useNavigate();
 
@@ -33,12 +23,14 @@ function Cookbook() {
         navigate('/sign-in')
     }
 
+    const { data } = useGetCookBookRecipes();
+
     return (
         <div>
             <Header />
             <div className='centered' style={GridStyle}>
                 {
-                    data.map((e, index) => <RecipeCard key={index} id={e.id} image={'/assets/veloute-de-giraumon.jpg'} name={e.name} rating={e.avgRating} />)
+                    data?.recipesIds.map((e, index) => <RecipeCard key={index} recipeId={e} image={'/assets/veloute-de-giraumon.jpg'} />)
                 }
             </div>
         </div>
