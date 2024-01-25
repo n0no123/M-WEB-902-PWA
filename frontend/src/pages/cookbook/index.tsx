@@ -1,9 +1,10 @@
+import { CSSProperties, useMemo, useState } from "react";
 import Header from "../../components/Header";
 import RecipeCard from "../../components/cookbook/RecipeCard";
+import useGetCookBookRecipes from "../../api/account/cookbook/useGetCookBookRecipes";
 import useIsLoggedIn from "../../api/account/useIsLoggedIn";
 import { useNavigate } from "react-router-dom";
-import { CSSProperties } from "react";
-import useGetCookBookRecipes from "../../api/account/cookbook/useGetCookBookRecipes";
+import Error from "../../components/Error";
 
 const GridStyle: CSSProperties = {
     display: 'grid',
@@ -16,24 +17,39 @@ const GridStyle: CSSProperties = {
 }
 
 function Cookbook() {
+    const [open, setOpen] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>('');
+
+    const getCookBookRecipes = useGetCookBookRecipes();
     const auth = useIsLoggedIn();
     const navigate = useNavigate();
+
+    const recipeIds = useMemo(() => {
+        if (getCookBookRecipes.isSuccess) {
+            return getCookBookRecipes.data.recipesIds;
+        } else if (getCookBookRecipes.isError) {
+            setOpen(true);
+            setMessage('An error has occured.');
+        }
+    }, [getCookBookRecipes]);
 
     if (!auth.data) {
         navigate('/sign-in')
     }
 
-    const { data } = useGetCookBookRecipes();
-
     return (
-        <div>
-            <Header />
-            <div className='centered' style={GridStyle}>
-                {
-                    data?.recipesIds.map((e, index) => <RecipeCard key={index} recipeId={e} image={'/assets/veloute-de-giraumon.jpg'} />)
-                }
+        <>
+            <div>
+                <Header />
+                <div className='centered' style={GridStyle}>
+                    {
+                        (recipeIds ?? []).map((e, index) => <RecipeCard key={index} recipeId={e} image={'/assets/veloute-de-giraumon.jpg'} />)
+                    }
+                </div>
             </div>
-        </div>
+            <Error open={open} message={message} setOpen={setOpen} setMessage={setMessage} />
+        </>
+
     );
 }
 

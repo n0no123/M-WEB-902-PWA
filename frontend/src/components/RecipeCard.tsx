@@ -16,13 +16,12 @@ export default function ActionAreaCard({ id, image, name, rating }: Props) {
     const navigate = useNavigate();
   
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ width: '20em' }}>
             <CardActionArea onClick={() => navigate(`/recipe/${id}`)}>
                 <CardMedia
                     component="img"
                     height="140"
                     image={image}
-                    alt="lorem ipsum"
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">

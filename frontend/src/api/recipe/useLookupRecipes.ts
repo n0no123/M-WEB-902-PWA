@@ -1,6 +1,6 @@
-import {useQuery} from "react-query";
+import { useQuery } from "react-query";
 import axiosBase from "../_misc/axios-base";
-import {isApiError, parseApiError} from "../_misc/api-error";
+import { isApiError, parseApiError } from "../_misc/api-error";
 
 type Return = {
     id: string;
@@ -24,6 +24,9 @@ const useLookupRecipes = () =>
                 throw result;
             }
             return result.data;
+        },
+        {
+            refetchInterval: 6000
         }
     );
 

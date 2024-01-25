@@ -1,9 +1,10 @@
-import { CSSProperties } from "react";
+import { CSSProperties, useMemo, useState } from "react";
 import Header from "../../components/Header";
 import RecipeCard from "../../components/RecipeCard";
 import useLookupRecipes from "../../api/recipe/useLookupRecipes";
 import useIsLoggedIn from "../../api/account/useIsLoggedIn";
 import { useNavigate } from "react-router-dom";
+import Error from "../../components/Error";
 
 const GridStyle: CSSProperties = {
   display: 'grid',
@@ -16,24 +17,38 @@ const GridStyle: CSSProperties = {
 }
 
 function Trending() {
+  const [open, setOpen] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
 
-  const {data} = useLookupRecipes();
+  const lookupRecipes = useLookupRecipes();
   const auth = useIsLoggedIn();
   const navigate = useNavigate();
+
+  const recipes = useMemo(() => {
+    if (lookupRecipes.isSuccess) {
+      return lookupRecipes.data;
+    } else if (lookupRecipes.isError) {
+      setOpen(true);
+      setMessage('An error has occured.');
+    }
+  }, [lookupRecipes]);
 
   if (!auth.data) {
     navigate('/sign-in')
   }
-
+  
   return (
-    <div>
-      <Header />
+    <>
+      <div>
+        <Header />
         <div className='centered' style={GridStyle}>
           {
-            data?.map((e, index) => <RecipeCard key={index} id={e.id} image={'/assets/veloute-de-giraumon.jpg'} name={e.name} rating={e.avgRating} />)
+            (recipes ?? []).map((e, index) => <RecipeCard key={index} id={e.id} image={'/assets/veloute-de-giraumon.jpg'} name={e.name} rating={e.avgRating} />)
           }
+        </div>
       </div>
-    </div>
+      <Error open={open} message={message} setOpen={setOpen} setMessage={setMessage} />
+    </>
   );
 }
 

@@ -18,6 +18,9 @@ const useGetCookBookRecipes = () =>
                 throw result;
             }
             return result.data;
+        },
+        {
+            refetchInterval: 6000
         }
     );
 
