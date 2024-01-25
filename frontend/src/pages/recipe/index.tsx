@@ -226,7 +226,7 @@ const VisualizeRecipe = () => {
                                 component={"span"}
                             >
                                 {
-                                    data.avgRating !== -1 ?
+                                    data.avgRating ?
                                         `${data.avgRating} / 5` :
                                         "No rating yet"
                                 }

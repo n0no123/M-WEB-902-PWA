@@ -9,7 +9,7 @@ type Props = {
     id: string,
     image: string,
     name: string,
-    rating: number,
+    rating?: number,
 }
 
 export default function ActionAreaCard({ id, image, name, rating }: Props) {
@@ -29,7 +29,7 @@ export default function ActionAreaCard({ id, image, name, rating }: Props) {
                         {name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {rating} / 5
+                    {rating ? `${rating} / 5` : "No rating yet"}
                     </Typography>
                 </CardContent>
             </CardActionArea>

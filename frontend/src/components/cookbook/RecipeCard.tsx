@@ -29,7 +29,7 @@ export default function ActionAreaCard({ image, recipeId }: Props) {
                         {hook.data?.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {hook.data?.avgRating} / 5
+                        {hook.data?.avgRating ? `${hook.data?.avgRating} / 5` : "No rating yet"}
                     </Typography>
                 </CardContent>
             </CardActionArea>
