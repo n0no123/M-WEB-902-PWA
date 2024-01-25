@@ -6,7 +6,7 @@ type Params = {
     recipeId: string;
 }
 
-const useAddRecipeToCookBook = () =>
+const useRemoveRecipeToCookBook = () =>
     useMutation<void, ApiError, Params>(
         "removeRecipeToCookBook",
         async ({recipeId}) => {
@@ -20,4 +20,4 @@ const useAddRecipeToCookBook = () =>
         }
     );
 
-export default useAddRecipeToCookBook;
+export default useRemoveRecipeToCookBook;

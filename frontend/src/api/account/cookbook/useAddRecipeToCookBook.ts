@@ -11,9 +11,8 @@ const useAddRecipeToCookBook = () =>
         "addRecipeToCookBook",
         async ({recipeId}) => {
             const res = await axiosBase
-                .post(`/account/cookbook/${recipeId}`)
+                .put(`/account/cookbook/${recipeId}`)
                 .catch(parseApiError);
-
             if (isApiError(res)) {
                 throw res;
             }

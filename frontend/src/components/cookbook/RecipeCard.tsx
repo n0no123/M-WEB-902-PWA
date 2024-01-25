@@ -4,31 +4,32 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import useGetRecipeById from '../../api/recipe/useGetRecipeById';
 
 type Props = {
-    id: string,
     image: string,
-    name: string,
-    rating?: number,
+    recipeId: string,
 }
 
-export default function ActionAreaCard({ id, image, name, rating }: Props) {
+export default function ActionAreaCard({ image, recipeId }: Props) {
     const navigate = useNavigate();
-  
+    const hook = useGetRecipeById({ recipeId: recipeId });
+
     return (
-        <Card sx={{ width: '20em' }}>
-            <CardActionArea onClick={() => navigate(`/recipe/${id}`)}>
+        <Card sx={{ maxWidth: 345 }}>
+            <CardActionArea onClick={() => navigate(`/recipe/${hook.data?.id}`)}>
                 <CardMedia
                     component="img"
                     height="140"
                     image={image}
+                    alt="lorem ipsum"
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {name}
+                        {hook.data?.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                    {rating ? `${rating} / 5` : "No rating yet"}
+                        {hook.data?.avgRating ? `${hook.data?.avgRating} / 5` : "No rating yet"}
                     </Typography>
                 </CardContent>
             </CardActionArea>
