@@ -1,4 +1,4 @@
-import useCreateRecipe, {IngredientDto} from "../api/recipe/useCreateRecipe";
+import useCreateRecipe, { IngredientDto } from "../api/recipe/useCreateRecipe";
 import {
     Alert,
     Button,
@@ -14,10 +14,10 @@ import {
 } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useCallback, useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const CreateRecipe = () => {
-    const {mutate, isLoading, isSuccess, isError, error: mutationError} = useCreateRecipe();
+    const { mutate, isLoading, isSuccess, isError, error: mutationError } = useCreateRecipe();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [currentlyEditedStep, setCurrentlyEditedStep] = useState<string>("");
     const [currentlyEditedIngredientQuantityWithUnit, setCurrentlyEditedIngredientQuantityWithUnit] = useState<string>("");
@@ -190,10 +190,10 @@ const CreateRecipe = () => {
                                 <IconButton
                                     onClick={() => setSteps(steps.filter((_, i) => i !== index))}
                                 >
-                                    <DeleteIcon/>
+                                    <DeleteIcon />
                                 </IconButton>
                             </Stack>
-                            <Divider/>
+                            <Divider />
                         </Stack>
                     )
                 }
@@ -246,7 +246,7 @@ const CreateRecipe = () => {
                             setCurrentlyEditedIngredientName("");
                         }}
                     >
-                        <AddIcon/>
+                        <AddIcon />
                     </IconButton>
                 </Stack>
                 {
@@ -269,10 +269,10 @@ const CreateRecipe = () => {
                                 <IconButton
                                     onClick={() => setIngredients(ingredients.filter((_, i) => i !== index))}
                                 >
-                                    <DeleteIcon/>
+                                    <DeleteIcon />
                                 </IconButton>
                             </Stack>
-                            <Divider/>
+                            <Divider />
                         </Stack>
                     )
                 }
@@ -313,7 +313,8 @@ const CreateRecipe = () => {
             </DialogActions>
         </Dialog>
         <Button
-            endIcon={<AddIcon/>}
+            color="inherit"
+            endIcon={<AddIcon />}
             onClick={() => setIsDialogOpen(true)}
         >
             Add Recipe
