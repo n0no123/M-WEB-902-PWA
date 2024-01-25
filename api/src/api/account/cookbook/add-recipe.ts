@@ -12,7 +12,7 @@ type Params = {
 const addRecipe = async (params: Params, user: User): Promise<EndpointReturn<never>> => {
     const cookbookRepository = datasource.getRepository(Cookbook);
     const recipeRepository = datasource.getRepository(Recipe);
-    const cookbook = await cookbookRepository.findOneBy({user: Equal(user)});
+    const cookbook = await cookbookRepository.findOneBy({ id: user.cookbook.id });
     const recipe = await recipeRepository.findOneBy({id: params.recipeId});
 
     if (!cookbook) {
