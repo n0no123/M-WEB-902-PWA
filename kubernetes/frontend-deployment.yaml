@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pwa-frontend
+spec:
+  selector:
+    matchLabels:
+      app: pwa-frontend
+  template:
+    metadata:
+      labels:
+        app: pwa-frontend
+    spec:
+      containers:
+      - name: pwa-frontend
+        image: DOCKER_IMAGE
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
