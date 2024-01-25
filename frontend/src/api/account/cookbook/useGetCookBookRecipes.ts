@@ -11,7 +11,7 @@ const useGetCookBookRecipes = () =>
         "getCookBookRecipes",
         async () => {
             const result = await axiosBase
-                .get<Return>("/cookbook")
+                .get<Return>("/account/cookbook")
                 .catch(parseApiError);
 
             if (isApiError(result)) {

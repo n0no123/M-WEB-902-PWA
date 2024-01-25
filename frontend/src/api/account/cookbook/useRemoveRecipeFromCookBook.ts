@@ -8,10 +8,10 @@ type Params = {
 
 const useAddRecipeToCookBook = () =>
     useMutation<void, ApiError, Params>(
-        "addRecipeToCookBook",
+        "removeRecipeToCookBook",
         async ({recipeId}) => {
             const res = await axiosBase
-                .delete(`/cookbook/${recipeId}`)
+                .delete(`/account/cookbook/${recipeId}`)
                 .catch(parseApiError);
 
             if (isApiError(res)) {
