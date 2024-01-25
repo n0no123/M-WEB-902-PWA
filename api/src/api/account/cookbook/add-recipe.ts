@@ -3,7 +3,6 @@ import {EndpointReturn} from "../../_misc/endpoint-return";
 import datasource from "../../../misc/datasource";
 import {Cookbook} from "../../../models/cookbook";
 import {Recipe} from "../../../models/recipe";
-import {Equal} from "typeorm";
 
 type Params = {
     recipeId: string;
@@ -12,7 +11,7 @@ type Params = {
 const addRecipe = async (params: Params, user: User): Promise<EndpointReturn<never>> => {
     const cookbookRepository = datasource.getRepository(Cookbook);
     const recipeRepository = datasource.getRepository(Recipe);
-    const cookbook = await cookbookRepository.findOneBy({ id: user.cookbook.id });
+    const cookbook = await cookbookRepository.findOne({ where: {id: user.cookbook.id}, relations: ['recipes'] });
     const recipe = await recipeRepository.findOneBy({id: params.recipeId});
 
     if (!cookbook) {
