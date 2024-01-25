@@ -14,7 +14,7 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
     const recipeRepository = datasource.getRepository(Recipe);
     const recipe = await recipeRepository.findOne({
         where: {id: params.recipeId },
-        relations: []
+        relations: ["owner"]
     });
 
     if (!recipe) {
@@ -23,7 +23,12 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
             errorMessage: "Recipe not found"
         }
     }
-
+    if (recipe.owner.id === user.id) {
+        return {
+            status: 400,
+            errorMessage: "You cannot rate your own recipe"
+        }
+    }
     const rating = ratingRepository.create({
         rating: params.rating,
         recipe,
