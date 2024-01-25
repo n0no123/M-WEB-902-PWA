@@ -4,6 +4,7 @@ import datasource from "../../misc/datasource";
 import {User} from "../../models/user";
 import {env} from "../../misc/env";
 import {EndpointReturn} from "../_misc/endpoint-return";
+import {Cookbook} from "../../models/cookbook";
 
 type Params = {
     email: string;
@@ -15,19 +16,26 @@ type Response = {
 }
 
 const create = async ({email, password}: Params): Promise<EndpointReturn<Response>> => {
-    const repository = datasource.getRepository(User);
+    const userRepository = datasource.getRepository(User);
+    const cookbookRepository = datasource.getRepository(Cookbook);
     const encryptedPassword = await hash(password, 10);
-    const userAlreadyExists = await repository.countBy({email}) > 0;
+    const userAlreadyExists = await userRepository.countBy({email}) > 0;
 
     if (userAlreadyExists) {
         return {status: 409, errorMessage: 'User already exists'};
     }
-    const createdUser = repository.create({
+    const createdCookBook = cookbookRepository.create({
+        recipes: []
+    });
+
+    const createdUser = userRepository.create({
         email,
         password: encryptedPassword,
-        myRecipes: []
+        myRecipes: [],
+        cookbook: createdCookBook,
     });
-    const resultUser = await repository.save(createdUser);
+    const resultUser = await userRepository.save(createdUser);
+    await cookbookRepository.save(createdCookBook);
     const token = sign(
         {id: resultUser.id},
         env.token.secret,
