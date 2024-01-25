@@ -24,9 +24,7 @@ const create = async ({email, password}: Params): Promise<EndpointReturn<Respons
     if (userAlreadyExists) {
         return {status: 409, errorMessage: 'User already exists'};
     }
-    const createdCookBook = cookbookRepository.create({
-        recipes: []
-    });
+    const createdCookBook = cookbookRepository.create({});
 
     const createdUser = userRepository.create({
         email,
@@ -35,6 +33,7 @@ const create = async ({email, password}: Params): Promise<EndpointReturn<Respons
         cookbook: createdCookBook,
     });
     const resultUser = await userRepository.save(createdUser);
+    createdCookBook.user = resultUser;
     await cookbookRepository.save(createdCookBook);
     const token = sign(
         {id: resultUser.id},
