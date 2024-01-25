@@ -30,10 +30,9 @@ const create = async ({email, password}: Params): Promise<EndpointReturn<Respons
         email,
         password: encryptedPassword,
         myRecipes: [],
-        cookbook: createdCookBook,
     });
+    createdCookBook.user = createdUser;
     const resultUser = await userRepository.save(createdUser);
-    createdCookBook.user = resultUser;
     await cookbookRepository.save(createdCookBook);
     const token = sign(
         {id: resultUser.id},
