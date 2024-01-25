@@ -1,6 +1,6 @@
 import useGetRecipeById from "../../api/recipe/useGetRecipeById";
 import {Link, useParams} from "react-router-dom";
-import React, {CSSProperties, useEffect, useState} from "react";
+import React, {CSSProperties, useEffect, useMemo, useState} from "react";
 import {
     Alert,
     Box,
@@ -134,11 +134,18 @@ const styles: Record<string, CSSProperties> = {
 
 const VisualizeRecipe = () => {
     const {id} = useParams();
-    const {data, isLoading, isError, isIdle, error} = useGetRecipeById({recipeId: id ?? ""});
+    const {data, isLoading, isError, isIdle, error, isSuccess} = useGetRecipeById({recipeId: id ?? ""});
     const {data: isLoggedIn} = useIsLoggedIn();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+    const canRate = useMemo(
+        () => {
+            if (!isSuccess)
+                return false;
+            return !data.owner && data.yourRating === undefined;
+        },
+        [isSuccess, data]
+    )
     if (id === "" || id === undefined)
         return <Typography>No recipe id provided</Typography>
     if (isLoading || isIdle)
@@ -225,7 +232,7 @@ const VisualizeRecipe = () => {
                             </Typography>
                         </Typography>
                         {
-                            isLoggedIn && <>
+                            (isLoggedIn && canRate) && <>
                                 <Divider/>
                                 <Stack
                                     direction={"row"}
