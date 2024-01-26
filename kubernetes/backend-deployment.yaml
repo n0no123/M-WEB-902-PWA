@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pwa-backend
+  namespace: pwa
+spec:
+  selector:
+    matchLabels:
+      app: pwa-backend
+  template:
+    metadata:
+      labels:
+        app: pwa-backend
+    spec:
+      containers:
+      - name: pwa-backend
+        image: DOCKER_IMAGE
+        imagePullPolicy: Always
+        env:
+        - name: DB_HOST
+          value: pwa-db
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          value: postgres
+        - name: DB_PASSWORD
+          value: postgres
+        - name: DB_NAME
+          value: postgres
+        - name: API_PORT
+          value: "8081"
+        - name: TOKEN_SECRET
+          value: "secret"
+        - name: TOKEN_EXPIRATION_TIME
+          value: "3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
