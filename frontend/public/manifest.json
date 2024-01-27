@@ -1,48 +1,66 @@
 {
-"name": "The name of your application",
-"short_name": "This name will show in your Windows taskbar, in the start menu, and Android homescreen",
-"start_url": "The URL that should be loaded when your application is opened",
-"display": "standalone",
-"description": "A description for your application",
-"lang": " The default language of your application",
-"dir": "auto",
-"theme_color": "#000000",
-"background_color": "#000000",
-"orientation": "any",
-"icons": [
-    {
-        "src": "https://www.pwabuilder.com/assets/icons/icon_512.png",
-        "sizes": "512x512",
-        "type": "image/png",
-        "purpose": "maskable"
-    },
-    {
-        "src": "https://www.pwabuilder.com/assets/icons/icon_192.png",
-        "sizes": "192x192",
-        "type": "image/png",
-        "purpose": "any"
-    }
-],
-"screenshots": [
-    {
-        "src": "https://www.pwabuilder.com/assets/screenshots/screen1.png",
-        "sizes": "2880x1800",
-        "type": "image/png",
-        "description": "A screenshot of the home page"
-    }
-],
-"related_applications": [
-    {
-        "platform":"windows",
-        "url": " The URL to your app in that app store"
-    }
-],
-"prefer_related_applications": false,
-"shortcuts": [
-    {
-        "name":"The name you would like to be displayed for your shortcut",
-        "url":"The url you would like to open when the user chooses this shortcut. This must be a URL local to your PWA. For example: If my start_url is /, this URL must be something like /shortcut",
-        "description":"A description of the functionality of this shortcut"
-    }
-]
+    "name": "Un peu moins d'un kilo",
+    "short_name": "Un peu moins d'un kilo",
+    "description": "Un peu moins d'un kg' - a culinary masterpiece at your fingertips.",
+    "background_color": "#3D6D5F",
+    "theme_color": "#3D6D5F",
+    "start_url": "/",
+    "lang": " en-GB",
+    "orientation": "portrait",
+    "display": "standalone",
+    "display_override": [
+        "window-controls-overlay"
+    ],
+    "shortcuts": [
+        {
+            "name": "Trending",
+            "url": "/",
+            "description": "See what's hot."
+        },
+        {
+            "name": "Cookbook",
+            "url": "/cookbook",
+            "description": "Access your cookbook."
+        }
+    ],
+    "icons": [
+        {
+            "src": "icons/android/android-launchericon-512-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/android/android-launchericon-192-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/android/android-launchericon-144-144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/android/android-launchericon-96-96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/android/android-launchericon-72-72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/android/android-launchericon-48-48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "https://www.pwabuilder.com/assets/screenshots/screen1.png",
+            "sizes": "2880x1800",
+            "type": "image/png",
+            "description": "A screenshot of the home page"
+        }
+    ]
 }
