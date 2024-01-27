@@ -31,7 +31,6 @@ const AskForNotificationsPermission = () => {
 
     useEffect(
         () => {
-            console.log('useEffect');
         if (isLoggedIn && Notification.permission === 'default')
             setOpen(true);
         },

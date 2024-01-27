@@ -13,7 +13,6 @@ const App = () => {
     const [registrationError, setRegistrationError] = useState(false);
 
     useEffect(() => {
-        console.log('Registering service worker')
         navigator.serviceWorker.register('/sw.js')
             .catch((registrationError) => {
                 setRegistrationError(true);
