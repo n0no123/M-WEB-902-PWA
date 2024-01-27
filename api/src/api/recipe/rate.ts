@@ -3,6 +3,7 @@ import {EndpointReturn} from "../_misc/endpoint-return";
 import datasource from "../../misc/datasource";
 import {Recipe} from "../../models/recipe";
 import {Rating} from "../../models/rating";
+import pushNotificationProvider from "../../providers/push-notification";
 
 type Params = {
     recipeId: string;
@@ -16,6 +17,7 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
         where: {id: params.recipeId },
         relations: ["owner"]
     });
+    const pushNotification = pushNotificationProvider();
 
     if (!recipe) {
         return {
@@ -36,6 +38,14 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
     });
 
     await ratingRepository.save(rating);
+
+    pushNotification.sendNotification({
+        message: `Your recipe ${recipe.name} has been rated by ${user.email} ! Click here to see the rating.`,
+        userEndpoint: recipe.owner.notificationLink,
+        url: '/recipe/' + recipe.id,
+        title: 'One of your recipe has been rated!',
+    })
+
     return {
         status: 200
     }

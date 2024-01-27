@@ -5,7 +5,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import useCreateUserAccount from '../../api/account/useCreateUserAccount';
 import Error from '../../components/Error';
-import { validateEmail } from '../../utils/EmailUtils';
+import { validateEmail } from '../../utils/email-utils';
 
 export default function SignUp() {
     const [open, setOpen] = useState<boolean>(false);
@@ -26,9 +26,9 @@ export default function SignUp() {
                     onSuccess: () => {
                         navigate('/');
                     },
-                    onError: () => {
+                    onError: (error) => {
                         setOpen(true);
-                        setMessage('An error has occured.');
+                        setMessage(error.errorMessage);
                     }
                 });
             } else {

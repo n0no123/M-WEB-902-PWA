@@ -2,6 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable, OneToOne, 
 import {Recipe} from "./recipe";
 import {Rating} from "./rating";
 import {Cookbook} from "./cookbook";
+import {PushSubscription} from "web-push";
 
 @Entity()
 export class User {
@@ -14,6 +15,12 @@ export class User {
         type: 'varchar',
     })
     email: string;
+
+    @Column({
+        nullable: true,
+        type: 'json',
+    })
+    notificationLink: PushSubscription;
 
     @Column({
         nullable: false,

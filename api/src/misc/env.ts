@@ -20,5 +20,9 @@ export const env = {
     token: {
         secret: ensureEnv('TOKEN_SECRET'),
         expirationTime: ensureEnv('TOKEN_EXPIRATION_TIME'),
-    }
+    },
+    vapid: {
+        publicKey: ensureEnv('VAPID_PUBLIC_KEY'),
+        privateKey: ensureEnv('VAPID_PRIVATE_KEY'),
+    },
 }
