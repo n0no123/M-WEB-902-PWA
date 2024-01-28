@@ -14,6 +14,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     fileFilter(req: Request, file: Express.Multer.File, callback: multer.FileFilterCallback) {
+        console.log(file);
         const allowedMimeTypes = ['image/jpeg', 'image/png'];
         if (allowedMimeTypes.includes(file.mimetype)) {
             callback(null, true);

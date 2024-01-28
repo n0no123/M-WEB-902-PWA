@@ -26,7 +26,7 @@ const coerceIngredients = z.string()
     )
     .transform((val) => JSON.parse(val) as unknown)
     .refine(
-        (parsed) =>  Array.isArray(parsed),
+        (parsed) => Array.isArray(parsed),
         {
             message: 'Must be an array'
         }
@@ -45,21 +45,21 @@ const coerceIngredients = z.string()
             message: 'Must be an array of objects with name and quantityWithUnit'
         }
     )
-    .transform((val) => val as {name: unknown, quantityWithUnit: unknown}[])
+    .transform((val) => val as { name: unknown, quantityWithUnit: unknown }[])
     .refine(
         (val) => val.every((item) => typeof item.name === 'string'),
         {
             message: 'Must be an array of objects with name as string'
         }
     )
-    .transform((val) => val as {name: string, quantityWithUnit: unknown}[])
+    .transform((val) => val as { name: string, quantityWithUnit: unknown }[])
     .refine(
         (val) => val.every((item) => typeof item.quantityWithUnit === 'string'),
         {
             message: 'Must be an array of objects with quantityWithUnit as string'
         }
     )
-    .transform((val) => val as {name: string, quantityWithUnit: string}[])
+    .transform((val) => val as { name: string, quantityWithUnit: string }[])
     .refine(
         (val) => val.every((item) => item.name.length > 0),
         {
@@ -78,6 +78,7 @@ router.put(
     upload.single("image"),
     parseAuthorizationHeader(false),
     async (req, res) => {
+        console.log(req);
         const parsedParams = z.object({
             name: z.string(),
             description: z.string(),
@@ -88,10 +89,11 @@ router.put(
             ingredients: coerceIngredients,
             servings: z.coerce.number().min(1),
         }).safeParse(req.body)
-        const parsedFile = z.object({
-            filename: z.string(),
-        })
-            .nullable()
+        const parsedFile =
+            z.object({
+                filename: z.string(),
+            })
+            .optional()
             .safeParse(req.file);
 
         if (parsedParams.success) {

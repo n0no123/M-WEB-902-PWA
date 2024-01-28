@@ -73,5 +73,5 @@ export class Recipe {
         nullable: true,
         type: "text"
     })
-    imageName: string;
+    imageName: string | undefined;
 }

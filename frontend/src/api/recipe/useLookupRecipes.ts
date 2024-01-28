@@ -10,6 +10,7 @@ type Return = {
     avgRating: number;
     ownerId: string;
     servings: number;
+    image: string | undefined;
 }[]
 
 const useLookupRecipes = () =>

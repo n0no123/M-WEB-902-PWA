@@ -16,6 +16,7 @@ type Params = {
     preparationTimeInMinutes: number;
     ingredients: IngredientDto[];
     servings: number;
+    image: File | undefined;
 }
 
 type Return = {
@@ -26,8 +27,28 @@ const useCreateRecipe = () =>
     useMutation<Return, ApiError, Params>(
         "createRecipe",
         async (params) => {
+            const formData = new FormData();
+            formData.append("name", params.name);
+            formData.append("description", params.description);
+            formData.append("steps", JSON.stringify(params.steps));
+            formData.append("tags", JSON.stringify(params.tags));
+            formData.append("cookingTimeInMinutes", params.cookingTimeInMinutes.toString());
+            formData.append("preparationTimeInMinutes", params.preparationTimeInMinutes.toString());
+            formData.append("servings", params.servings.toString());
+            formData.append("ingredients", JSON.stringify(params.ingredients));
+
+            if (params.image) {
+                formData.append("image", params.image);
+            }
             const res = await axiosBase
-                .put<Return>("/recipe/", params)
+                .put<Return>(
+                    "/recipe/",
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        }
+                    })
                 .catch(parseApiError);
 
             if (isApiError(res)) {

@@ -1,4 +1,4 @@
-import useCreateRecipe, { IngredientDto } from "../api/recipe/useCreateRecipe";
+import useCreateRecipe, {IngredientDto} from "../api/recipe/useCreateRecipe";
 import {
     Alert,
     Button,
@@ -15,7 +15,8 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { useCallback, useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
+import AskForCameraPermission from "./AskForCameraPermission";
 
 type Props = {
     isMobile: boolean
@@ -39,6 +40,7 @@ const CreateRecipe = ({ isMobile }: Props) => {
     const [steps, setSteps] = useState<string[]>([]);
     const [ingredients, setIngredients] = useState<IngredientDto[]>([]);
     const [tags, setTags] = useState<string[]>([]);
+    const [image, setImage] = useState<File | undefined>(undefined);
 
     const submit = useCallback(
         () => {
@@ -65,7 +67,8 @@ const CreateRecipe = ({ isMobile }: Props) => {
                     servings,
                     steps,
                     ingredients,
-                    tags
+                    tags,
+                    image
                 })
                 setError(undefined);
             }
@@ -80,7 +83,8 @@ const CreateRecipe = ({ isMobile }: Props) => {
             ingredients,
             tags,
             mutate,
-            setError
+            setError,
+            image
         ]
     );
     const handleNumberType = useCallback(
@@ -103,6 +107,7 @@ const CreateRecipe = ({ isMobile }: Props) => {
         [isSuccess]
     );
     return <>
+        <AskForCameraPermission />
         <Dialog
             open={isDialogOpen}
             onClose={() => setIsDialogOpen(false)}
@@ -298,6 +303,12 @@ const CreateRecipe = ({ isMobile }: Props) => {
                 <Typography>
                     {tags.join(", ")}
                 </Typography>
+                <Divider>Picture</Divider>
+                <TextField
+                    fullWidth
+                    type={"file"}
+                    onChange={(e: any) => setImage(e.target.files?.[0])}
+                />
                 {(error || mutationError) && <Alert severity={"error"}>{error}{mutationError?.errorMessage}</Alert>}
             </DialogContent>
             <DialogActions>
