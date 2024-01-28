@@ -22,15 +22,5 @@
   },
   "include": [
     "src",
-    "src/sw"
   ],
-  "exclude": [
-    "src/sw"
-  ],
-  "references": [
-    {
-      "path": "src/sw",
-      "prepend": true
-    }
-  ]
 }
