@@ -46,12 +46,13 @@ this.addEventListener("install", (event) => {
                 cache.addAll([
                     "/",
                     "/index.html",
+                    "/offline.html"
                 ]),
             ),
     );
 });
 
-this.addEventListener("activate", (event) => {
+self.addEventListener("activate", (event) => {
     const expectedCacheNamesSet = new Set(Object.values(CURRENT_CACHES));
     event.waitUntil(
         caches.keys().then((cacheNames) =>
@@ -68,7 +69,7 @@ this.addEventListener("activate", (event) => {
     );
 });
 
-this.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", (event) => {
     console.log("Handling fetch event for", event.request.url);
     event.respondWith(
         caches.open(CURRENT_CACHES.cache).then((cache) => {
