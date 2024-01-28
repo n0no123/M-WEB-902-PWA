@@ -1,7 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
 
-const AskForCameraPermission = () => {
+type AskForCameraPermissionProps = {
+    setCameraPermissionGranted: (value: boolean) => void
+}
+
+const AskForCameraPermission = ({setCameraPermissionGranted}: AskForCameraPermissionProps) => {
     const [open, setOpen] = useState(false);
     const close = useCallback(
         () => setOpen(false),
@@ -17,6 +21,7 @@ const AskForCameraPermission = () => {
         () => {
             close();
             navigator.mediaDevices.getUserMedia({video: true})
+                .then(() => setCameraPermissionGranted(true))
                 .catch(console.error);
         },
         [close]
@@ -24,6 +29,7 @@ const AskForCameraPermission = () => {
 
     useEffect(() => {
         if (!noCamera) {
+            setCameraPermissionGranted(false);
             return;
         }
         navigator.permissions.query({name: 'camera' as unknown as PermissionName})

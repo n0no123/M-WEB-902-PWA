@@ -30,6 +30,7 @@ const CreateRecipe = ({ isMobile }: Props) => {
     const [currentlyEditedIngredientName, setCurrentlyEditedIngredientName] = useState<string>("");
     const [currentlyEditedTag, setCurrentlyEditedTag] = useState<string>("");
     const [error, setError] = useState<string | undefined>(undefined);
+    const [isCameraPermissionGranted, setIsCameraPermissionGranted] = useState<boolean>(false);
 
     //recipe
     const [name, setName] = useState("");
@@ -107,7 +108,7 @@ const CreateRecipe = ({ isMobile }: Props) => {
         [isSuccess]
     );
     return <>
-        <AskForCameraPermission />
+        <AskForCameraPermission setCameraPermissionGranted={setIsCameraPermissionGranted} />
         <Dialog
             open={isDialogOpen}
             onClose={() => setIsDialogOpen(false)}
