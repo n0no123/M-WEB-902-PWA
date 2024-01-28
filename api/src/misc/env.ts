@@ -20,5 +20,6 @@ export const env = {
     token: {
         secret: ensureEnv('TOKEN_SECRET'),
         expirationTime: ensureEnv('TOKEN_EXPIRATION_TIME'),
-    }
+    },
+    upload_path: ensureEnv('UPLOAD_PATH'),
 }
