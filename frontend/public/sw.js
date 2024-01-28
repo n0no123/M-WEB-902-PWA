@@ -33,21 +33,32 @@ self.addEventListener('notificationclick', (event) => {
     event.waitUntil(self.clients.openWindow(event.notification.data.url));
 });
 
-const CACHE_VERSION = 1;
+const STATIC_CACHE_VERSION = 1;
+const STATIC_CACHE = `static-cache-v${STATIC_CACHE_VERSION}`;
+const STATIC_CACHE_ASSETS = [
+    '/',
+    '/index.html',
+    '/offline.html',
+];
+
+const DYNAMIC_CACHE_VERSION = 1;
+const DYNAMIC_CACHE = `dynamic-cache-v${DYNAMIC_CACHE_VERSION}`;
+const DYNAMIC_CACHE_BLACKLIST = [
+    '/sign-in',
+    '/sign-up'
+];
+
 const CURRENT_CACHES = {
-    cache: `cache-v${CACHE_VERSION}`,
+    static: STATIC_CACHE,
+    dynamic: DYNAMIC_CACHE
 };
 
 this.addEventListener("install", (event) => {
     event.waitUntil(
         caches
-            .open("v1")
+            .open(CURRENT_CACHES.static)
             .then((cache) =>
-                cache.addAll([
-                    "/",
-                    "/index.html",
-                    "/offline.html"
-                ]),
+                cache.addAll(STATIC_CACHE_ASSETS),
             ),
     );
 });
@@ -70,40 +81,28 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-    console.log("Handling fetch event for", event.request.url);
     event.respondWith(
-        caches.open(CURRENT_CACHES.cache).then((cache) => {
+        caches.open(CURRENT_CACHES.dynamic).then((cache) => {
             return cache
                 .match(event.request)
                 .then((response) => {
                     if (response) {
-                        console.log(" Found response in cache:", response);
                         return response;
                     }
-                    console.log(
-                        " No response for %s found in cache. About to fetch " +
-                        "from network…",
-                        event.request.url,
-                    );
                     return fetch(event.request.clone()).then((response) => {
-                        console.log(
-                            "  Response for %s from network is: %O",
-                            event.request.url,
-                            response,
-                        );
                         if (
                             response.status < 400
                         ) {
-                            console.log("  Caching the response to", event.request.url);
-                            cache.put(event.request, response.clone());
-                        } else {
-                            console.log("  Not caching the response to", event.request.url);
+                            if (!DYNAMIC_CACHE_BLACKLIST.some(path => event.request.url.includes(path))) {
+                                cache.put(event.request, response.clone());
+                            }
                         }
                         return response;
+                    }).catch(() => {
+                        return caches.match('/offline.html');
                     });
                 })
                 .catch((error) => {
-                    console.error("  Error in fetch handler:", error);
                     throw error;
                 });
         }),
