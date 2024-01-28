@@ -16,13 +16,12 @@ export default function ActionAreaCard({ image, recipeId }: Props) {
     const hook = useGetRecipeById({ recipeId: recipeId });
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ width: '20em' }}>
             <CardActionArea onClick={() => navigate(`/recipe/${hook.data?.id}`)}>
                 <CardMedia
                     component="img"
                     height="140"
                     image={image}
-                    alt="lorem ipsum"
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
