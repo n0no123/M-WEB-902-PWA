@@ -49,8 +49,8 @@ jobs:
         IMAGE_TAG: ${{ steps.commit.outputs.short }}
       run: |
         sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG|g" kubernetes/frontend-deployment.yaml && \
-        kubectl apply -f kubernetes/frontend-deployment.yaml
-        kubectl apply -f kubernetes/frontend-service.yaml
+        kubectl -n pwa apply -f kubernetes/frontend-deployment.yaml
+        kubectl -n pwa apply -f kubernetes/frontend-service.yaml
 
   build_backend:
     name: Deploy Backend
@@ -86,5 +86,6 @@ jobs:
         IMAGE_TAG: ${{ steps.commit.outputs.short }}
       run: |
         sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY_BACKEND:$IMAGE_TAG|g" kubernetes/backend-deployment.yaml && \
-        kubectl apply -f kubernetes/backend-deployment.yaml
-        kubectl apply -f kubernetes/backend-service.yaml
+        cat kubernetes/backend-deployment.yaml
+        kubectl -n pwa apply -f kubernetes/backend-deployment.yaml
+        kubectl -n pwa apply -f kubernetes/backend-service.yaml
