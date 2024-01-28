@@ -1,11 +1,11 @@
-const useLogout = () =>
-    ({
-        mutate: () => {
-            const localStorageItem = localStorage.getItem("token");
+import {useAuthentication} from "../../utils/AuthenticationContext";
 
-            if (localStorageItem !== null)
-                localStorage.removeItem("token");
-        }
-    });
+const useLogout = () => {
+    const { setToken } = useAuthentication();
+
+    return {
+        mutate: () => setToken(null)
+    }
+};
 
 export default useLogout;

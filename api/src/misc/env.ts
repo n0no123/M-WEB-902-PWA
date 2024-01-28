@@ -21,5 +21,9 @@ export const env = {
         secret: ensureEnv('TOKEN_SECRET'),
         expirationTime: ensureEnv('TOKEN_EXPIRATION_TIME'),
     },
+    vapid: {
+        publicKey: ensureEnv('VAPID_PUBLIC_KEY'),
+        privateKey: ensureEnv('VAPID_PRIVATE_KEY'),
+    },
     upload_path: ensureEnv('UPLOAD_PATH'),
 }

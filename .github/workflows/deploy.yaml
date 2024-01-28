@@ -8,7 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  ECR_REPOSITORY: pwa-epitech
+  ECR_REPOSITORY_FRONTEND: pwa-front
+  ECR_REPOSITORY_BACKEND: pwa-back
   EKS_CLUSTER_NAME: prophecy
   AWS_REGION: us-east-1
 
@@ -38,8 +39,8 @@ jobs:
         IMAGE_TAG: ${{ steps.commit.outputs.short }}
       run: |
         cd frontend
-        docker build --build-arg="react_app_api_url=https://unpeumoinsdunkilo.prophecy-eip.com/api" -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build --build-arg="react_app_api_url=https://unpeumoinsdunkilo.prophecy-eip.com/api" -t $ECR_REGISTRY/$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG -f Dockerfile .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG
     - name: Update kube config
       run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
     - name: Deploy to EKS
@@ -47,9 +48,9 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ steps.commit.outputs.short }}
       run: |
-        sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" kubernetes/frontend-deployment.yaml && \
-        kubectl apply -f kubernetes/frontend-deployment.yaml
-        kubectl apply -f kubernetes/frontend-service.yaml
+        sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY_FRONTEND:$IMAGE_TAG|g" kubernetes/frontend-deployment.yaml && \
+        kubectl -n pwa apply -f kubernetes/frontend-deployment.yaml
+        kubectl -n pwa apply -f kubernetes/frontend-service.yaml
 
   build_backend:
     name: Deploy Backend
@@ -75,8 +76,8 @@ jobs:
         IMAGE_TAG: ${{ steps.commit.outputs.short }}
       run: |
         cd api
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_BACKEND:$IMAGE_TAG -f Dockerfile .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY_BACKEND:$IMAGE_TAG
     - name: Update kube config
       run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
     - name: Deploy to EKS
@@ -84,6 +85,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ steps.commit.outputs.short }}
       run: |
-        sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" kubernetes/backend-deployment.yaml && \
-        kubectl apply -f kubernetes/backend-deployment.yaml
-        kubectl apply -f kubernetes/backend-service.yaml
+        sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY_BACKEND:$IMAGE_TAG|g" kubernetes/backend-deployment.yaml && \
+        cat kubernetes/backend-deployment.yaml
+        kubectl -n pwa apply -f kubernetes/backend-deployment.yaml
+        kubectl -n pwa apply -f kubernetes/backend-service.yaml
