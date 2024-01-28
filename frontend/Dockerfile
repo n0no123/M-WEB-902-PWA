@@ -8,7 +8,7 @@ RUN npm ci
 
 COPY . .
 
-ARG react_app_api_url
+ARG react_app_api_url=https://unpeumoinsdunkilo.prophecy-eip.com/api
 ENV REACT_APP_API_URL=$react_app_api_url
 ENV NODE_ENV production
 

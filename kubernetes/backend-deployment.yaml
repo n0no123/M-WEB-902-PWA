@@ -33,6 +33,10 @@ spec:
           value: "secret"
         - name: TOKEN_EXPIRATION_TIME
           value: "3600"
+        - name: VAPID_PRIVATE_KEY
+          value: mxoWPpDK_ZBp3XQOjtaW_4Du3EcyDYM-8mglP8pwQVk
+        - name: VAPID_PUBLIC_KEY
+          value: BJmyJBn5LXnxc9wwMFR9_z6oCatrjnLZfRmoXJmJxeFu5AzN2nmKL2ig2s_HkXVt9mu-TSodt0CxCkTfdYvptS0
         resources:
           limits:
             memory: "128Mi"
