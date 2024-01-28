@@ -90,7 +90,9 @@ router.put(
         }).safeParse(req.body)
         const parsedFile = z.object({
             filename: z.string(),
-        }).safeParse(req.file);
+        })
+            .nullable()
+            .safeParse(req.file);
 
         if (parsedParams.success) {
             if (parsedFile.success) {
@@ -98,7 +100,7 @@ router.put(
                     const result = await create(
                         {
                             ...parsedParams.data,
-                            imageName: parsedFile.data.filename
+                            imageName: parsedFile?.data?.filename
                         },
                         req.user
                     );
