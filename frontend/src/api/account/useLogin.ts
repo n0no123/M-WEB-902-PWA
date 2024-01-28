@@ -1,6 +1,7 @@
 import {useMutation} from "react-query";
 import {ApiError, isApiError, parseApiError} from "../_misc/api-error";
 import axiosBase from "../_misc/axios-base";
+import {useAuthentication} from "../../utils/AuthenticationContext";
 
 type Params = {
     email: string;
@@ -11,10 +12,12 @@ type Result = {
     token: string;
 };
 
-const useLogin = () =>
-    useMutation<void, ApiError, Params>(
+const useLogin = () => {
+    const {setToken} = useAuthentication();
+
+    return useMutation<void, ApiError, Params>(
         "login",
-        async ({ email, password}) => {
+        async ({email, password}) => {
             const result = await axiosBase.get<Result>("/account", {
                 params: {
                     email,
@@ -25,8 +28,8 @@ const useLogin = () =>
             if (isApiError(result)) {
                 throw result;
             }
-            localStorage.setItem("token", result.data.token);
+            setToken(result.data.token);
         }
     );
-
+}
 export default useLogin;

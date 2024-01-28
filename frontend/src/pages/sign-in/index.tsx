@@ -5,7 +5,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import useLogin from '../../api/account/useLogin';
 import Error from '../../components/Error';
-import { validateEmail } from '../../utils/EmailUtils';
+import { validateEmail } from '../../utils/email-utils';
 
 
 export default function SignIn() {
@@ -29,7 +29,7 @@ export default function SignIn() {
                     },
                     onError: () => {
                         setOpen(true);
-                        setMessage('An error has occured.');
+                        setMessage('An error has occurred.');
                     }
                 });
             } else {
