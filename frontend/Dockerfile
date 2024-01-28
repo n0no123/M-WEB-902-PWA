@@ -10,6 +10,7 @@ COPY . .
 
 ARG react_app_api_url
 ENV REACT_APP_API_URL=$react_app_api_url
+ENV NODE_ENV production
 
 RUN npm run build
 

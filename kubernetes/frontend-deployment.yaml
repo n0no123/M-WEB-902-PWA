@@ -16,9 +16,12 @@ spec:
       - name: pwa-frontend
         image: DOCKER_IMAGE
         imagePullPolicy: Always
+        env:
+        - name: REACT_APP_API_URL
+          value: https://unpeumoinsdunkilo.prophecy-eip.com/api
         resources:
           limits:
-            memory: "128Mi"
+            memory: "1024Mi"
             cpu: "500m"
         ports:
         - containerPort: 3000

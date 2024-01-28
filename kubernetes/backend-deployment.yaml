@@ -18,15 +18,15 @@ spec:
         imagePullPolicy: Always
         env:
         - name: DB_HOST
-          value: pwa-db
+          value: pwa.c2hfuzz8gtjv.us-east-1.rds.amazonaws.com
         - name: DB_PORT
           value: "5432"
-        - name: DB_USER
-          value: postgres
+        - name: DB_USERNAME
+          value: pwa
         - name: DB_PASSWORD
-          value: postgres
+          value: keq39hhas3w0WrDYBvNcrjznUFpBgygG3E8JfHTRgeCUUUh9W2KWVtWcedaazzTp
         - name: DB_NAME
-          value: postgres
+          value: pwa
         - name: API_PORT
           value: "8081"
         - name: TOKEN_SECRET
