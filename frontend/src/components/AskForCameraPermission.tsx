@@ -12,11 +12,6 @@ const AskForCameraPermission = ({setCameraPermissionGranted}: AskForCameraPermis
         [setOpen]
     );
 
-    const noCamera = useMemo(
-        () => !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia,
-        []
-    );
-
     const requestCameraPermission = useCallback(
         () => {
             close();
@@ -28,7 +23,7 @@ const AskForCameraPermission = ({setCameraPermissionGranted}: AskForCameraPermis
     );
 
     useEffect(() => {
-        if (!noCamera) {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
             setCameraPermissionGranted(false);
             return;
         }
@@ -36,6 +31,9 @@ const AskForCameraPermission = ({setCameraPermissionGranted}: AskForCameraPermis
             .then(permission => {
                 if (permission.state === 'prompt') {
                     setOpen(true);
+                }
+                if (permission.state === 'granted') {
+                    setCameraPermissionGranted(true);
                 }
             });
     }, []);
