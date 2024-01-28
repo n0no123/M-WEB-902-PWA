@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pwa-backend
+  namespace: pwa
+spec:
+  selector:
+    matchLabels:
+      app: pwa-backend
+  template:
+    metadata:
+      labels:
+        app: pwa-backend
+    spec:
+      containers:
+      - name: pwa-backend
+        image: DOCKER_IMAGE
+        imagePullPolicy: Always
+        env:
+        - name: DB_HOST
+          value: pwa.c2hfuzz8gtjv.us-east-1.rds.amazonaws.com
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USERNAME
+          value: pwa
+        - name: DB_PASSWORD
+          value: keq39hhas3w0WrDYBvNcrjznUFpBgygG3E8JfHTRgeCUUUh9W2KWVtWcedaazzTp
+        - name: DB_NAME
+          value: pwa
+        - name: API_PORT
+          value: "8081"
+        - name: TOKEN_SECRET
+          value: "secret"
+        - name: TOKEN_EXPIRATION_TIME
+          value: "3600"
+        - name: VAPID_PRIVATE_KEY
+          value: mxoWPpDK_ZBp3XQOjtaW_4Du3EcyDYM-8mglP8pwQVk
+        - name: VAPID_PUBLIC_KEY
+          value: BJmyJBn5LXnxc9wwMFR9_z6oCatrjnLZfRmoXJmJxeFu5AzN2nmKL2ig2s_HkXVt9mu-TSodt0CxCkTfdYvptS0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000

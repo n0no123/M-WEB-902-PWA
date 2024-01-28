@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pwa-frontend
+  namespace: pwa
+spec:
+  selector:
+    matchLabels:
+      app: pwa-frontend
+  template:
+    metadata:
+      labels:
+        app: pwa-frontend
+    spec:
+      containers:
+      - name: pwa-frontend
+        image: DOCKER_IMAGE
+        imagePullPolicy: Always
+        env:
+        - name: REACT_APP_API_URL
+          value: https://unpeumoinsdunkilo.prophecy-eip.com/api
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
