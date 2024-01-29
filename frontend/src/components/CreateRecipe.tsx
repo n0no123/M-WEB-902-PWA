@@ -17,6 +17,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {useCallback, useEffect, useState} from "react";
 import AskForCameraPermission from "./AskForCameraPermission";
+import TakePictureWithCamera from "./cookbook/TakePictureWithCamera";
+import {useQueryClient} from "react-query";
 
 type Props = {
     isMobile: boolean
@@ -24,6 +26,7 @@ type Props = {
 
 const CreateRecipe = ({ isMobile }: Props) => {
     const { mutate, isLoading, isSuccess, error: mutationError } = useCreateRecipe();
+    const queryClient = useQueryClient();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [currentlyEditedStep, setCurrentlyEditedStep] = useState<string>("");
     const [currentlyEditedIngredientQuantityWithUnit, setCurrentlyEditedIngredientQuantityWithUnit] = useState<string>("");
@@ -41,7 +44,7 @@ const CreateRecipe = ({ isMobile }: Props) => {
     const [steps, setSteps] = useState<string[]>([]);
     const [ingredients, setIngredients] = useState<IngredientDto[]>([]);
     const [tags, setTags] = useState<string[]>([]);
-    const [image, setImage] = useState<File | undefined>(undefined);
+    const [image, setImage] = useState<Blob | undefined>(undefined);
 
     const submit = useCallback(
         () => {
@@ -70,6 +73,18 @@ const CreateRecipe = ({ isMobile }: Props) => {
                     ingredients,
                     tags,
                     image
+                }, {
+                    onSuccess: (data) => {
+                        const oldData: unknown[] | undefined = queryClient.getQueryData("lookupRecipes");
+                        queryClient.setQueryData("lookupRecipes", [...(oldData ?? []), {
+                            id: data.id,
+                            name,
+                            tags,
+                            totalPreparationTimeInMinutes: preparationTime + cookingTime,
+                            servings,
+                            image
+                        }]);
+                    }
                 })
                 setError(undefined);
             }
@@ -85,7 +100,8 @@ const CreateRecipe = ({ isMobile }: Props) => {
             tags,
             mutate,
             setError,
-            image
+            image,
+            queryClient
         ]
     );
     const handleNumberType = useCallback(
@@ -305,11 +321,15 @@ const CreateRecipe = ({ isMobile }: Props) => {
                     {tags.join(", ")}
                 </Typography>
                 <Divider>Picture</Divider>
-                <TextField
-                    fullWidth
-                    type={"file"}
-                    onChange={(e: any) => setImage(e.target.files?.[0])}
-                />
+                {
+                    isCameraPermissionGranted ?
+                        <TakePictureWithCamera setPicture={setImage}/> :
+                        <TextField
+                            fullWidth
+                            type={"file"}
+                            onChange={(e: any) => setImage(e.target.files?.[0])}
+                        />
+                }
                 {(error || mutationError) && <Alert severity={"error"}>{error}{mutationError?.errorMessage}</Alert>}
             </DialogContent>
             <DialogActions>

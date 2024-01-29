@@ -16,7 +16,7 @@ type Params = {
     preparationTimeInMinutes: number;
     ingredients: IngredientDto[];
     servings: number;
-    image: File | undefined;
+    image: Blob | undefined;
 }
 
 type Return = {

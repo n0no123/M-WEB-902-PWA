@@ -6,10 +6,8 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Recipe from "./pages/recipe";
 import Cookbook from './pages/cookbook';
 import {useEffect, useState} from "react";
-import { Snackbar, Alert } from '@mui/material';
+import {Alert, Snackbar} from '@mui/material';
 import AskForNotificationsPermission from "./components/AskForNotificationsPermission";
-import AskForCameraPermission from "./components/AskForCameraPermission";
-import TakePictureWithCamera from "./components/cookbook/TakePictureWithCamera";
 
 const App = () => {
     const [registrationError, setRegistrationError] = useState(false);
@@ -21,16 +19,9 @@ const App = () => {
                 console.log(registrationError);
             });
     }, []);
-    const [cameraAuthorized, setCameraAuthorized] = useState(false);
-    const [pictureTaken, setPictureTaken] = useState("");
 
     return <>
-        Hai
-        <AskForCameraPermission setCameraPermissionGranted={setCameraAuthorized}/>
-        {
-            cameraAuthorized && <TakePictureWithCamera setPicture={setPictureTaken}/>
-        }
-        {/*<AskForNotificationsPermission />
+        <AskForNotificationsPermission />
         <Snackbar
             open={registrationError}
             autoHideDuration={6000}
@@ -48,7 +39,7 @@ const App = () => {
                     <Route path="recipe/:id" element={<Recipe/>}/>
                 </Route>
             </Routes>
-        </Router>*/}
+        </Router>
     </>;
 }
 

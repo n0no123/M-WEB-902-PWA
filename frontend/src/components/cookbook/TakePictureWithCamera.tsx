@@ -1,8 +1,21 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {Button} from "@mui/material";
 
+const dataURLtoBlob = (dataURL: string): Blob => {
+    const byteString = atob(dataURL.split(',')[1]);
+    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0]
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i)
+    }
+
+    return new Blob([ab], {type: mimeString});
+}
+
 type TakePictureWithCameraProps = {
-    setPicture: (value: string) => void
+    setPicture: (value: Blob) => void
 }
 
 const TakePictureWithCamera = ({setPicture}: TakePictureWithCameraProps) => {
@@ -11,18 +24,17 @@ const TakePictureWithCamera = ({setPicture}: TakePictureWithCameraProps) => {
     const streamRef = useRef<MediaStream | null>(null);
     const [retakePicture, setRetakePicture] = useState(false);
 
-    useEffect(() => {
-        navigator.mediaDevices.enumerateDevices()
-            .then(async devices => {
-                streamRef.current = await navigator.mediaDevices.getUserMedia({
-                    video: {}
-                });
+    useEffect(
+        () => {
+            navigator.mediaDevices.getUserMedia({
+                video: {}
+            }).then(async stream => {
+                streamRef.current = stream;
                 if (videoRef.current) {
                     videoRef.current.srcObject = streamRef.current;
                     await videoRef.current.play()
                 }
-            })
-            .catch(console.error);
+            }).catch(console.error);
         },
         []
     );
@@ -42,7 +54,7 @@ const TakePictureWithCamera = ({setPicture}: TakePictureWithCameraProps) => {
             context.drawImage(videoRef.current, 0, 0);
             setRetakePicture(true);
             videoRef.current.pause();
-            setPicture(canvasRef.current.toDataURL());
+            setPicture(dataURLtoBlob(canvasRef.current.toDataURL()));
         },
         []
     );
@@ -60,7 +72,7 @@ const TakePictureWithCamera = ({setPicture}: TakePictureWithCameraProps) => {
 
     return <>
         <video ref={videoRef} autoPlay/>
-        <canvas ref={canvasRef} style={{display: "none"}} />
+        <canvas ref={canvasRef} style={{display: "none"}}/>
         <Button onClick={
             retakePicture ? resumeVideo : takePicture
         }>
