@@ -1,6 +1,6 @@
 import useGetRecipeById from "../../api/recipe/useGetRecipeById";
-import {Link, useParams} from "react-router-dom";
-import {CSSProperties, useEffect, useMemo, useState} from "react";
+import { Link, useParams } from "react-router-dom";
+import { CSSProperties, useEffect, useMemo, useState } from "react";
 import {
     Alert,
     Box,
@@ -18,19 +18,20 @@ import {
 import useRateRecipe from "../../api/recipe/useRateRecipe";
 import EditRecipe from "../../components/EditRecipe";
 import useIsLoggedIn from "../../api/account/useIsLoggedIn";
-import {useTheme} from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import Header from "../../components/Header";
 import AddOrRemoveRecipeFromCookbookButton from "../../components/AddOrRemoveRecipeFromCookbookButton";
+import CountdownTimer from "../../components/CountdownTimer";
 
 type RatingDialogProps = {
     currentRating: number | undefined,
     recipeId: string
 }
 
-const RatingDialog = ({currentRating, recipeId}: RatingDialogProps) => {
+const RatingDialog = ({ currentRating, recipeId }: RatingDialogProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [rating, setRating] = useState(currentRating ?? 0);
-    const {mutate, isError, isLoading, isSuccess} = useRateRecipe();
+    const { mutate, isError, isLoading, isSuccess } = useRateRecipe();
 
     useEffect(
         () => {
@@ -42,7 +43,7 @@ const RatingDialog = ({currentRating, recipeId}: RatingDialogProps) => {
     return <>
         <Button
             onClick={() => setIsOpen(true)}
-            sx={{width: "fit-content"}}
+            sx={{ width: "fit-content" }}
             variant={"outlined"}
         >
             {
@@ -88,7 +89,7 @@ const RatingDialog = ({currentRating, recipeId}: RatingDialogProps) => {
                     variant={"outlined"}
                 >Cancel</Button>
                 <Button
-                    onClick={() => mutate({recipeId, rating: rating as any})}
+                    onClick={() => mutate({ recipeId, rating: rating as any })}
                     variant={"contained"}
                 >
                     Confirm
@@ -134,9 +135,9 @@ const styles: Record<string, CSSProperties> = {
 }
 
 const VisualizeRecipe = () => {
-    const {id} = useParams();
-    const {data, isLoading, isError, isIdle, error, isSuccess} = useGetRecipeById({recipeId: id ?? ""});
-    const {data: isLoggedIn} = useIsLoggedIn();
+    const { id } = useParams();
+    const { data, isLoading, isError, isIdle, error, isSuccess } = useGetRecipeById({ recipeId: id ?? "" });
+    const { data: isLoggedIn } = useIsLoggedIn();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
     const canRate = useMemo(
@@ -165,27 +166,27 @@ const VisualizeRecipe = () => {
                     width={250}
                     height={112}
                 />
-                <Skeleton variant={"text"} width={250}/>
-                <Skeleton variant={"text"} width={260}/>
-                <Skeleton variant={"rounded"} height={35} width={160}/>
-                <Skeleton variant={"text"} height={200}/>
+                <Skeleton variant={"text"} width={250} />
+                <Skeleton variant={"text"} width={260} />
+                <Skeleton variant={"rounded"} height={35} width={160} />
+                <Skeleton variant={"text"} height={200} />
 
                 <Divider>Ingredients</Divider>
                 {
-                    new Array(10).fill(<Skeleton variant={"text"}/>)
+                    new Array(10).fill(<Skeleton variant={"text"} />)
                 }
                 <Divider>Preparation steps</Divider>
                 {
-                    new Array(10).fill(<Skeleton variant={"text"}/>)
+                    new Array(10).fill(<Skeleton variant={"text"} />)
                 }
                 <Divider>Tags</Divider>
-                <Skeleton variant={"text"}/>
+                <Skeleton variant={"text"} />
             </Stack>
         </Box>;
     if (isError)
         return <Typography>{JSON.stringify(error)}</Typography>
     return <>
-        <Header/>
+        <Header />
         <Box sx={styles.container}>
             <Stack sx={{
                 width: isMobile ? "100%" : "50%",
@@ -197,7 +198,7 @@ const VisualizeRecipe = () => {
                         <EditRecipe
                             recipeId={id}
                             defaultValues={data}
-                        /> : <AddOrRemoveRecipeFromCookbookButton recipeId={id}/>
+                        /> : <AddOrRemoveRecipeFromCookbookButton recipeId={id} />
                 }
                 <Typography variant="h1" sx={styles.name}>{data.name}</Typography>
                 {
@@ -209,7 +210,7 @@ const VisualizeRecipe = () => {
                             justifyContent: "center",
                         }}
                     >
-                        <img src={`${process.env.REACT_APP_API_URL}${data.image}`} height={225} width={375} alt={"decorative"}/>
+                        <img src={`${process.env.REACT_APP_API_URL}${data.image}`} height={225} width={375} alt={"decorative"} />
                     </Box>
                 }
                 <Stack>
@@ -223,7 +224,7 @@ const VisualizeRecipe = () => {
                             margin: "auto"
                         }}
                     >
-                        <Typography sx={{fontWeight: "bold"}}>
+                        <Typography sx={{ fontWeight: "bold" }}>
                             Average rating :{" "}
                             <Typography
                                 component={"span"}
@@ -237,13 +238,13 @@ const VisualizeRecipe = () => {
                         </Typography>
                         {
                             (isLoggedIn && canRate) && <>
-                                <Divider/>
+                                <Divider />
                                 <Stack
                                     direction={"row"}
                                     alignItems={"center"}
                                     justifyContent={"space-between"}
                                 >
-                                    <Typography sx={{fontWeight: "bold"}}>
+                                    <Typography sx={{ fontWeight: "bold" }}>
                                         Your rating :{" "}
                                         <Typography
                                             component={"span"}
@@ -255,7 +256,7 @@ const VisualizeRecipe = () => {
                                             }
                                         </Typography>
                                     </Typography>
-                                    <RatingDialog currentRating={data.yourRating} recipeId={id}/>
+                                    <RatingDialog currentRating={data.yourRating} recipeId={id} />
                                 </Stack>
                             </>
                         }
@@ -288,7 +289,7 @@ const VisualizeRecipe = () => {
                     }}
                 >
                     <Box>
-                        <Typography sx={{fontWeight: "bold"}}>
+                        <Typography sx={{ fontWeight: "bold" }}>
                             Total time :{" "}
                             <Typography
                                 variant={"body1"}
@@ -298,7 +299,7 @@ const VisualizeRecipe = () => {
                             </Typography>
                         </Typography>
                     </Box>
-                    <Divider sx={{width: "100%"}}/>
+                    <Divider sx={{ width: "100%" }} />
                     <Stack
                         direction={"row"}
                         justifyContent={"space-between"}
@@ -306,14 +307,8 @@ const VisualizeRecipe = () => {
                             width: "75%",
                         }}
                     >
-                        <Typography sx={{fontWeight: "bold"}}>
-                            Preparation time :
-                            <Typography textAlign={"center"}>{data.preparationTimeInMinutes}mn</Typography>
-                        </Typography>
-                        <Typography sx={{fontWeight: "bold"}}>
-                            Cooking time :
-                            <Typography textAlign={"center"}>{data.cookingTimeInMinutes}mn</Typography>
-                        </Typography>
+                        <CountdownTimer minutes={data.preparationTimeInMinutes} title="Preparation:"></CountdownTimer>
+                        <CountdownTimer minutes={data.cookingTimeInMinutes} title="Cooking"></CountdownTimer>
                     </Stack>
                 </Stack>
                 {
