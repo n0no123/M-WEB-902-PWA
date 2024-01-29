@@ -224,6 +224,9 @@ const VisualizeRecipe = () => {
                             margin: "auto"
                         }}
                     >
+                        <Button onClick={() => {
+                            navigator.vibrate(500);
+                        }}>CLICK ME</Button>
                         <Typography sx={{ fontWeight: "bold" }}>
                             Average rating :{" "}
                             <Typography
