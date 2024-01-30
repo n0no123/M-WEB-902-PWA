@@ -22,7 +22,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ minutes, title }) => {
             if (remainingTime.minutes === 0 && remainingTime.seconds === 0) {
                 clearInterval(interval);
                 setIsActive(false);
-                navigator.vibrate([1250, 750, 1250, 2750, 2000, 2750, 1250, 750, 1250, 2750, 2000, 6000, 2000, 6000, 80000, 800000]);
+                navigator.vibrate([6000, 4000, 6000, 4000, 6000, 4000, 6000, 4000, 6000, 4000, 6000, 4000]);
             } else {
                 setRemainingTime((prev) => {
                     if (prev.seconds === 0) {
