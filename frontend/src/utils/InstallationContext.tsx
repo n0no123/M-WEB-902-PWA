@@ -13,15 +13,12 @@ export const InstallationProvider = ({children}: { children: ReactElement }) => 
     const [installationEvent, setInstallationEvent] = useState<any | null >(null);
 
     useEffect(() => {
-        console.log("useEffect HEADER");
         const lambda = (e: Event) => {
             e.preventDefault();
-            console.log("useEffect HEADER lambda");
             setInstallationEvent(e);
         }
         window.addEventListener('beforeinstallprompt', lambda);
         return () => {
-            console.log("useEffect HEADER demount");
             window.removeEventListener('beforeinstallprompt', lambda);
         }
     }, [setInstallationEvent]);

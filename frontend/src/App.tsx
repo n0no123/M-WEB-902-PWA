@@ -16,7 +16,7 @@ const App = () => {
         navigator.serviceWorker.register('/sw.js')
             .catch((registrationError) => {
                 setRegistrationError(true);
-                console.log(registrationError);
+                console.error(registrationError);
             });
     }, []);
 
