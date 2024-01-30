@@ -124,7 +124,10 @@ const CreateRecipe = ({ isMobile }: Props) => {
         [isSuccess]
     );
     return <>
+    {
+        !isCameraPermissionGranted &&
         <AskForCameraPermission setCameraPermissionGranted={setIsCameraPermissionGranted} />
+    }
         <Dialog
             open={isDialogOpen}
             onClose={() => setIsDialogOpen(false)}

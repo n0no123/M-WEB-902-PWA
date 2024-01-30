@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
 
 type AskForCameraPermissionProps = {
@@ -10,6 +10,14 @@ const AskForCameraPermission = ({setCameraPermissionGranted}: AskForCameraPermis
     const close = useCallback(
         () => setOpen(false),
         [setOpen]
+    );
+    const noThanks = useCallback(
+        () => {
+            close();
+            setCameraPermissionGranted(false);
+            localStorage.setItem('noCamera', 'true');
+        },
+        [close]
     );
 
     const requestCameraPermission = useCallback(
@@ -30,6 +38,8 @@ const AskForCameraPermission = ({setCameraPermissionGranted}: AskForCameraPermis
         navigator.permissions.query({name: 'camera' as unknown as PermissionName})
             .then(permission => {
                 if (permission.state === 'prompt') {
+                    if (localStorage.getItem('noCamera') === 'true')
+                        return;
                     setOpen(true);
                 }
                 if (permission.state === 'granted') {
@@ -50,7 +60,7 @@ const AskForCameraPermission = ({setCameraPermissionGranted}: AskForCameraPermis
         </DialogContent>
         <DialogActions>
             <Button
-                onClick={close}
+                onClick={noThanks}
                 variant={"outlined"}
             >
                 No thanks
