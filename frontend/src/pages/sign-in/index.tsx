@@ -6,6 +6,7 @@ import { Avatar, Box, Button, Container, Grid, Link, TextField, Typography } fro
 import useLogin from '../../api/account/useLogin';
 import Error from '../../components/Error';
 import { validateEmail } from '../../utils/email-utils';
+import AskForInstallation from '../../components/AskForInstallation';
 
 
 export default function SignIn() {
@@ -44,6 +45,7 @@ export default function SignIn() {
 
     return (
         <>
+            <AskForInstallation />
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
