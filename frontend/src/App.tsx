@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Recipe from "./pages/recipe";
 import Cookbook from './pages/cookbook';
 import {useEffect, useState} from "react";
-import { Snackbar, Alert } from '@mui/material';
+import {Alert, Snackbar} from '@mui/material';
 import AskForNotificationsPermission from "./components/AskForNotificationsPermission";
 
 const App = () => {
@@ -19,6 +19,7 @@ const App = () => {
                 console.log(registrationError);
             });
     }, []);
+
     return <>
         <AskForNotificationsPermission />
         <Snackbar

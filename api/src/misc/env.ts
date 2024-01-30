@@ -25,4 +25,5 @@ export const env = {
         publicKey: ensureEnv('VAPID_PUBLIC_KEY'),
         privateKey: ensureEnv('VAPID_PRIVATE_KEY'),
     },
+    upload_path: ensureEnv('UPLOAD_PATH'),
 }

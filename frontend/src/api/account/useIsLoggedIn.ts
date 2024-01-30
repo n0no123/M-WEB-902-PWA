@@ -4,7 +4,7 @@ const useIsLoggedIn = () => {
     const {token} = useAuthentication();
 
     return {
-        data: token !== null,
+        data: token !== null && token !== undefined,
     };
 }
 

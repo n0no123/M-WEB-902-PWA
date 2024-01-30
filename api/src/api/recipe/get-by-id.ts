@@ -2,6 +2,8 @@ import {EndpointReturn} from "../_misc/endpoint-return";
 import {User} from "../../models/user";
 import datasource from "../../misc/datasource";
 import {Recipe} from "../../models/recipe";
+import {env} from "../../misc/env";
+import path from "path";
 
 type Params = {
     recipeId: string;
@@ -27,6 +29,7 @@ type Return = {
     ownerId: string;
     servings: number;
     owner: boolean;
+    image: string | undefined;
 }
 
 const getById = async (params: Params, user?: User): Promise<EndpointReturn<Return>> => {
@@ -66,7 +69,8 @@ const getById = async (params: Params, user?: User): Promise<EndpointReturn<Retu
                 undefined,
             ownerId: recipe.owner.id,
             servings: recipe.servings,
-            owner: user ? recipe.owner.id === user.id : false
+            owner: user ? recipe.owner.id === user.id : false,
+            image: recipe.imageName ? "/images/" + recipe.imageName : undefined
         }
     }
 }

@@ -18,6 +18,7 @@ type Params = {
     preparationTimeInMinutes: number;
     ingredients: IngredientDto[];
     servings: number;
+    imageName: string | undefined;
 }
 
 type Return = {
@@ -40,7 +41,8 @@ const create = async (params: Params, user: User): Promise<EndpointReturn<Return
                 name: ingredient.name,
                 quantityWithUnit: ingredient.quantityWithUnit
             })),
-        owner: user
+        owner: user,
+        imageName: params.imageName
     });
     await ingredientRepository.save(recipe.ingredients);
     const savedRecipe = await recipeRepository.save(recipe);

@@ -27,9 +27,9 @@ export default function SignIn() {
                     onSuccess: () => {
                         navigate('/');
                     },
-                    onError: () => {
+                    onError: (err) => {
                         setOpen(true);
-                        setMessage('An error has occurred.');
+                        setMessage(err.errorMessage);
                     }
                 });
             } else {

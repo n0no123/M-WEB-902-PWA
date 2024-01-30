@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {
     id: string,
-    image: string,
+    image: string | undefined,
     name: string,
     rating?: number,
 }
 
 export default function ActionAreaCard({ id, image, name, rating }: Props) {
     const navigate = useNavigate();
-  
+
     return (
         <Card sx={{ width: '20em' }}>
             <CardActionArea onClick={() => navigate(`/recipe/${id}`)}>

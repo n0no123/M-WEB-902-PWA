@@ -68,4 +68,10 @@ export class Recipe {
         rating => rating.recipe
     )
     ratings: Rating[];
+
+    @Column({
+        nullable: true,
+        type: "text"
+    })
+    imageName: string | undefined;
 }
