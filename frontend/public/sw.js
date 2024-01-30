@@ -33,7 +33,7 @@ self.addEventListener('notificationclick', (event) => {
     event.waitUntil(self.clients.openWindow(event.notification.data.url));
 });
 
-const STATIC_CACHE_VERSION = 2;
+const STATIC_CACHE_VERSION = 4;
 const STATIC_CACHE = `static-cache-v${STATIC_CACHE_VERSION}`;
 const STATIC_CACHE_ASSETS = [
     '/',
@@ -41,7 +41,7 @@ const STATIC_CACHE_ASSETS = [
     '/offline.html',
 ];
 
-const DYNAMIC_CACHE_VERSION = 2;
+const DYNAMIC_CACHE_VERSION = 4;
 const DYNAMIC_CACHE = `dynamic-cache-v${DYNAMIC_CACHE_VERSION}`;
 const DYNAMIC_CACHE_BLACKLIST = [
     '/sign-in',
@@ -70,7 +70,6 @@ self.addEventListener("activate", (event) => {
             Promise.all(
                 cacheNames.map((cacheName) => {
                     if (!expectedCacheNamesSet.has(cacheName)) {
-                        console.log("Deleting out of date cache:", cacheName);
                         return caches.delete(cacheName);
                     }
                     return null;
@@ -81,30 +80,33 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-    event.respondWith(
-        caches.open(CURRENT_CACHES.dynamic).then((cache) => {
-            return cache
-                .match(event.request)
-                .then((response) => {
-                    if (response) {
-                        return response;
-                    }
-                    return fetch(event.request.clone()).then((response) => {
-                        if (
-                            response.status < 400
-                        ) {
-                            if (!DYNAMIC_CACHE_BLACKLIST.some(path => event.request.url.includes(path))) {
-                                cache.put(event.request, response.clone());
-                            }
+
+    if (event.request.method == 'GET') {
+        event.respondWith(
+            caches.open(CURRENT_CACHES.dynamic).then((cache) => {
+                return cache
+                    .match(event.request)
+                    .then((response) => {
+                        if (response) {
+                            return response;
                         }
-                        return response;
-                    }).catch(() => {
-                        return caches.match('/offline.html');
+                        return fetch(event.request.clone()).then((response) => {
+                            if (
+                                response.status < 400
+                            ) {
+                                if (!DYNAMIC_CACHE_BLACKLIST.some(path => event.request.url.includes(path))) {
+                                    cache.put(event.request, response.clone());
+                                }
+                            }
+                            return response;
+                        }).catch(() => {
+                            return caches.match('/offline.html');
+                        });
+                    })
+                    .catch((error) => {
+                        throw error;
                     });
-                })
-                .catch((error) => {
-                    throw error;
-                });
-        }),
-    );
+            }),
+        );
+    }
 });
