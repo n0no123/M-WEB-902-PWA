@@ -1,5 +1,6 @@
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
-import {useCallback, useEffect, useState, useMemo} from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { useCallback, useState, useMemo, useEffect } from "react";
+import { useInstallation } from "../utils/InstallationContext";
 
 const AskForInstallation = () => {
     const [open, setOpen] = useState(false);
@@ -7,27 +8,24 @@ const AskForInstallation = () => {
         () => setOpen(false),
         [setOpen]
     );
-
-    const [installPromptEvent, setInstallPromptEvent] = useState<any>(null)
-
-    const canInstall = useMemo(() => {
-        return installPromptEvent !== null;
-    }, [installPromptEvent]);
+    const { installationEvent, setInstallationEvent } = useInstallation();
 
     useEffect(() => {
-        setOpen(canInstall);
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            setInstallPromptEvent(e);
-        });
-    }, [installPromptEvent]);
+        if (installationEvent) {
+            setOpen(true);
+        }
+    }, [installationEvent, setOpen]);
+
+    const canInstall = useMemo(() => {
+        return installationEvent !== null;
+    }, [installationEvent]);
 
     const installApp = () => {
         close();
-        if (!installPromptEvent) {
+        if (!installationEvent) {
             return;
         }
-        installPromptEvent.prompt();
+        installationEvent.prompt();
     }
 
     return <Dialog
