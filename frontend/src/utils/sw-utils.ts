@@ -14,7 +14,7 @@ export const requestNotificationPermission = async () => {
 }
 
 const subscribeUser = async (registration: ServiceWorkerRegistration): Promise<PushSubscription> => {
-    const response = await fetch('/vapidPublicKey');
+    const response = await fetch('/vapid-public-key.txt');
     const vapidPublicKey = await response.text();
     const convertedVapidKey = urlB64ToUint8Array(vapidPublicKey.trim());
 
