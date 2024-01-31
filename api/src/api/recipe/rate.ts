@@ -44,6 +44,7 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
     await ratingRepository.save(rating);
     console.log("after rating")
 
+    console.log(recipe.owner);
     pushNotification.sendNotification({
         message: `Your recipe ${recipe.name} has been rated by ${user.email} ! Click here to see the rating.`,
         userEndpoint: recipe.owner.notificationLink,
