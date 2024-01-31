@@ -235,7 +235,7 @@ router.put(
             id: z.string().uuid(),
         }).safeParse(req.params);
         const parsedBody = z.object({
-            rating: z.number().min(1).max(5),
+            rating: z.number().min(0).max(5),
         }).safeParse(req.body);
 
         if (parsedQuery.success && parsedBody.success) {
