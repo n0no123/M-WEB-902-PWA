@@ -1,4 +1,3 @@
-import {PushSubscription} from "web-push";
 import {z} from 'zod';
 import {Router} from 'express';
 import create from "./create";
@@ -27,7 +26,7 @@ router.put('/', async (req, res) => {
                 res.status(result.status).send(result.errorMessage);
             }
         } catch (e) {
-            console.error(e);
+            console.log(e);
             res.status(500).send();
         }
     } else {
@@ -51,7 +50,7 @@ router.get('/', async (req, res) => {
                 res.status(result.status).send(result.errorMessage);
             }
         } catch (e) {
-            console.error(e);
+            console.log(e);
             res.status(500).send();
         }
     } else {
@@ -79,7 +78,7 @@ router.post('/subscribe', parseAuthorizationHeader(false), async (req: Request, 
                 res.status(result.status).send(result.errorMessage);
             }
         } catch (e) {
-            console.error(e);
+            console.log(e);
             res.status(500).send();
         }
     } else {

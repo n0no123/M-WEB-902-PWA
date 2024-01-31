@@ -17,8 +17,10 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
         where: {id: params.recipeId },
         relations: ["owner"]
     });
+    console.log("before singleton")
     const pushNotification = pushNotificationProvider();
-
+   console.log(pushNotification);
+    console.log("before checks")
     if (!recipe) {
         return {
             status: 404,
@@ -31,13 +33,16 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
             errorMessage: "You cannot rate your own recipe"
         }
     }
+    console.log("before rating creation")
     const rating = ratingRepository.create({
         rating: params.rating,
         recipe,
         user
     });
 
+    console.log("before rating")
     await ratingRepository.save(rating);
+    console.log("after rating")
 
     pushNotification.sendNotification({
         message: `Your recipe ${recipe.name} has been rated by ${user.email} ! Click here to see the rating.`,
@@ -45,7 +50,7 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
         url: '/recipe/' + recipe.id,
         title: 'One of your recipe has been rated!',
     })
-
+    console.log("after notif send");
     return {
         status: 200
     }
