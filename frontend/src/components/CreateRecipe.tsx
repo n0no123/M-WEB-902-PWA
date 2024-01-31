@@ -1,4 +1,4 @@
-import useCreateRecipe, {IngredientDto} from "../api/recipe/useCreateRecipe";
+import useCreateRecipe, { IngredientDto } from "../api/recipe/useCreateRecipe";
 import {
     Alert,
     Button,
@@ -15,10 +15,10 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import {useCallback, useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 import AskForCameraPermission from "./AskForCameraPermission";
 import TakePictureWithCamera from "./cookbook/TakePictureWithCamera";
-import {useQueryClient} from "react-query";
+import { useQueryClient } from "react-query";
 
 type Props = {
     isMobile: boolean
@@ -187,19 +187,29 @@ const CreateRecipe = ({ isMobile }: Props) => {
                     }}
                 />
                 <Divider>Steps</Divider>
-                <TextField
-                    fullWidth
-                    label={"Step"}
-                    value={currentlyEditedStep}
-                    onKeyDown={e => {
-                        if (e.key === "Enter") {
-                            e.preventDefault();
+                <Stack direction={"row"} justifyContent={"space-between"}>
+                    <TextField
+                        fullWidth
+                        label={"Step"}
+                        value={currentlyEditedStep}
+                        onKeyDown={e => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                setSteps([...steps, currentlyEditedStep]);
+                                setCurrentlyEditedStep("");
+                            }
+                        }}
+                        onChange={e => setCurrentlyEditedStep(e.target.value)}
+                    />
+                    <IconButton
+                        onClick={() => {
                             setSteps([...steps, currentlyEditedStep]);
                             setCurrentlyEditedStep("");
-                        }
-                    }}
-                    onChange={e => setCurrentlyEditedStep(e.target.value)}
-                />
+                        }}
+                    >
+                        <AddIcon />
+                    </IconButton>
+                </Stack>
                 {
                     steps.map((step, index) =>
                         <Stack
@@ -326,7 +336,7 @@ const CreateRecipe = ({ isMobile }: Props) => {
                 <Divider>Picture</Divider>
                 {
                     isCameraPermissionGranted ?
-                        <TakePictureWithCamera setPicture={setImage}/> :
+                        <TakePictureWithCamera setPicture={setImage} /> :
                         <TextField
                             fullWidth
                             type={"file"}
