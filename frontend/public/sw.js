@@ -14,17 +14,15 @@ self.addEventListener('push', (event) => {
         const data = event.data.json();
         const options = {
             body: data.body,
-            icon: data.icon,
-            image: data.image,
-            badge: data.badge,
+            icon: "https://unpeumoinsdunkilo.prophecy-eip.com/icons/android/android-launchericon-144-144.png",
             data: {
                 url: data.url
             }
         };
 
-        if (!isVisible()) {
+        //if (!isVisible()) {
             event.waitUntil(self.registration.showNotification(data.title, options));
-        }
+        //}
     }
 });
 
@@ -33,7 +31,7 @@ self.addEventListener('notificationclick', (event) => {
     event.waitUntil(self.clients.openWindow(event.notification.data.url));
 });
 
-const STATIC_CACHE_VERSION = 2;
+const STATIC_CACHE_VERSION = 7;
 const STATIC_CACHE = `static-cache-v${STATIC_CACHE_VERSION}`;
 const STATIC_CACHE_ASSETS = [
     '/',
@@ -41,7 +39,7 @@ const STATIC_CACHE_ASSETS = [
     '/offline.html',
 ];
 
-const DYNAMIC_CACHE_VERSION = 2;
+const DYNAMIC_CACHE_VERSION = 7;
 const DYNAMIC_CACHE = `dynamic-cache-v${DYNAMIC_CACHE_VERSION}`;
 const DYNAMIC_CACHE_BLACKLIST = [
     '/sign-in',
@@ -53,7 +51,7 @@ const CURRENT_CACHES = {
     dynamic: DYNAMIC_CACHE
 };
 
-this.addEventListener("install", (event) => {
+self.addEventListener("install", (event) => {
     event.waitUntil(
         caches
             .open(CURRENT_CACHES.static)
@@ -80,7 +78,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-    if (event.request.method == 'GET') {
+    if (event.request.method === 'GET') {
         event.respondWith(
             caches.open(CURRENT_CACHES.dynamic).then((cache) => {
                 return fetch(event.request.clone()).then((response) => {
