@@ -11,6 +11,14 @@ const AskForNotificationsPermission = () => {
         [setOpen]
     );
 
+    const noThanks = useCallback(
+        () => {
+            close();
+            localStorage.setItem('noNotifications', 'true');
+        },
+        [close]
+    );
+
     const requestNotificationPermission = useCallback(
         () => {
             close();
@@ -31,8 +39,10 @@ const AskForNotificationsPermission = () => {
 
     useEffect(
         () => {
-        if (isLoggedIn && Notification.permission === 'default')
-            setOpen(true);
+            if (localStorage.getItem('noNotifications') === 'true')
+                return;
+            if (isLoggedIn && Notification.permission === 'default')
+                setOpen(true);
         },
         [isLoggedIn]
     );
@@ -49,7 +59,7 @@ const AskForNotificationsPermission = () => {
         </DialogContent>
         <DialogActions>
             <Button
-                onClick={close}
+                onClick={noThanks}
                 variant={"outlined"}
             >
                 No thanks
