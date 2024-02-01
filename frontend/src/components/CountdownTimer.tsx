@@ -23,9 +23,6 @@ export default function CountdownTimer({ minutes, title }: CountdownTimerProps) 
                 clearInterval(interval);
                 setIsActive(false);
                 setVibrate(true);
-                if (vibrate) {
-                    setVibrateInterval(setInterval(() => navigator.vibrate(6000), 7000));
-                }
             } else {
                 setRemainingTime((prev) => {
                     if (prev.seconds === 0) {
@@ -45,6 +42,12 @@ export default function CountdownTimer({ minutes, title }: CountdownTimerProps) 
 
         if (isActive) {
             interval = setInterval(updateTimer, 1000);
+        }
+
+        if (vibrate) {
+            setVibrateInterval(setInterval(() => {
+                navigator.vibrate(6000);
+            }, 7000));
         }
 
         return () => {
@@ -71,7 +74,7 @@ export default function CountdownTimer({ minutes, title }: CountdownTimerProps) 
     const formatSeconds = (seconds: number) => {
         return seconds < 10 ? `0${seconds}` : `${seconds}`;
     };
-
+    
     return (
         minutes === 0 ?
             <Typography sx={{ fontWeight: "bold" }} textAlign={"center"}>
