@@ -210,7 +210,7 @@ const VisualizeRecipe = () => {
                             justifyContent: "center",
                         }}
                     >
-                        <img src={`${process.env.REACT_APP_API_URL}${data.image}`} height={225} width={375} alt={"decorative"} />
+                        <img src={data.image ? `${process.env.REACT_APP_API_URL}${data.image}` : '/assets/placeholder.png'} height={225} width={375} alt={"decorative"} />
                     </Box>
                 }
                 <Stack>

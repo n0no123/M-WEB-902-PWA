@@ -21,7 +21,7 @@ self.addEventListener('push', (event) => {
         };
 
         //if (!isVisible()) {
-            event.waitUntil(self.registration.showNotification(data.title, options));
+        event.waitUntil(self.registration.showNotification(data.title, options));
         //}
     }
 });
@@ -52,6 +52,25 @@ const CURRENT_CACHES = {
     dynamic: DYNAMIC_CACHE
 };
 
+const isBlackListed = (url) => {
+    DYNAMIC_CACHE_BLACKLIST.some(path => url.includes(path))
+}
+
+async function networkFirst(request) {
+    try {
+        const networkResponse = await fetch(request);
+        if (networkResponse.ok) {
+            const cache = await caches.open(CURRENT_CACHES.dynamic);
+            cache.put(request, networkResponse.clone());
+        }
+        return networkResponse;
+    } catch {
+        const cachedResponse = await caches.match(request);
+        const offline = await caches.match('/offline.html')
+        return cachedResponse || offline;
+    }
+}
+
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches
@@ -79,33 +98,8 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-    if (event.request.method === 'GET') {
-        event.respondWith(
-            caches.open(CURRENT_CACHES.dynamic).then((cache) => {
-                return fetch(event.request.clone()).then((response) => {
-                    if (
-                        response.status < 400
-                    ) {
-                        if (!DYNAMIC_CACHE_BLACKLIST.some(path => event.request.url.includes(path))) {
-                            cache.put(event.request, response.clone());
-                        }
-                    }
-                    return response;
-                }).catch(() => {
-                    return cache
-                        .match(event.request)
-                        .then((response) => {
-                            if (response) {
-                                return response;
-                            } else {
-                                return caches.match('/offline.html');
-                            }
-                        })
-                        .catch((error) => {
-                            throw error;
-                        });
-                });
-            }),
-        );
+    if (event.request.method !== 'GET' || isBlackListed(event.request.url)) {
+        return;
     }
+    event.respondWith(networkFirst(event.request));
 });
