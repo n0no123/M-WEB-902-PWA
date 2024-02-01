@@ -57,12 +57,6 @@
   ],
   "screenshots": [
     {
-      "src": "assets/screenshot_01.png",
-      "sizes": "1080x2134",
-      "type": "image/png",
-      "description": "A screenshot of the home page"
-    },
-    {
       "src": "assets/screenshot_02.png",
       "sizes": "1080x2141",
       "type": "image/png",
