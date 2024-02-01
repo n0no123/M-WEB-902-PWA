@@ -31,7 +31,7 @@ type Return = {
 
 const useGetRecipeById = ({ recipeId }: Params) =>
     useQuery<Return, Error>(
-        "getRecipeById",
+        `getRecipeById.${recipeId}`,
         async () => {
             const result = await axiosBase
                 .get<Return>("/recipe/" + recipeId)
