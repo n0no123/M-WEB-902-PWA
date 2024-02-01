@@ -10,6 +10,7 @@ const GridStyle: CSSProperties = {
   gridTemplateColumns: 'repeat(auto-fit, minmax(21.5em, 1fr))',
   margin: 'auto',
   paddingTop: '2em',
+  paddingBottom: '6em',
   placeItems: 'center'
 }
 
