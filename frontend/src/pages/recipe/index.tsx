@@ -13,7 +13,8 @@ import {
     Skeleton,
     Slider,
     Stack,
-    Typography, useMediaQuery
+    Typography,
+    useMediaQuery
 } from "@mui/material";
 import useRateRecipe from "../../api/recipe/useRateRecipe";
 import EditRecipe from "../../components/EditRecipe";
@@ -107,7 +108,7 @@ const styles: Record<string, CSSProperties> = {
         transform: "translateX(-50%)",
         position: "relative",
         minHeight: "calc(100% - 4em)",
-        backgroundColor: "white",
+        backgroundColor: "var(--color-surface)",
         borderRadius: "1em",
     },
     name: {
@@ -125,7 +126,6 @@ const styles: Record<string, CSSProperties> = {
         position: "absolute",
         minHeight: "calc(100% - 2em)",
         width: "calc(100% - 2em)",
-        backgroundColor: "#e3e3e3",
         padding: "1em",
     },
     wrappedTypography: {
@@ -192,7 +192,7 @@ const VisualizeRecipe = () => {
                 width: isMobile ? "100%" : "50%",
                 ...(styles.root)
             }}>
-                <Link to={"/"}>{"<"} Go back to trending</Link>
+                <Link style={{ color: "var(--color-tertiary)" }} to={"/"}>{"<"} Go back to trending</Link>
                 {
                     data.owner ?
                         <EditRecipe
@@ -217,7 +217,7 @@ const VisualizeRecipe = () => {
                     <Stack
                         sx={{
                             width: "80%",
-                            backgroundColor: "#ededed",
+                            backgroundColor: "#C5E7FF",
                             borderRadius: ".5em",
                             padding: "1em",
                             gap: 1,
@@ -281,7 +281,7 @@ const VisualizeRecipe = () => {
                 <Stack
                     sx={{
                         width: "80%",
-                        backgroundColor: "#ededed",
+                        backgroundColor: "#C5E7FF",
                         borderRadius: ".5em",
                         padding: "1em",
                         gap: 1,
