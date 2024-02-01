@@ -43,8 +43,7 @@ const STATIC_CACHE_ASSETS = [
 const DYNAMIC_CACHE_VERSION = 1;
 const DYNAMIC_CACHE = `dynamic-cache-v${DYNAMIC_CACHE_VERSION}`;
 const DYNAMIC_CACHE_BLACKLIST = [
-    '/sign-in',
-    '/sign-up'
+    '/account?',
 ];
 
 const CURRENT_CACHES = {
@@ -53,7 +52,7 @@ const CURRENT_CACHES = {
 };
 
 const isBlackListed = (url) => {
-    DYNAMIC_CACHE_BLACKLIST.some(path => url.includes(path))
+    return DYNAMIC_CACHE_BLACKLIST.some(path => url.includes(path))
 }
 
 async function networkFirst(request) {
@@ -66,8 +65,11 @@ async function networkFirst(request) {
         return networkResponse;
     } catch {
         const cachedResponse = await caches.match(request);
-        const offline = await caches.match('/offline.html')
-        return cachedResponse || offline;
+        const offline = await caches.match('/offline.html');
+        if (cachedResponse) {
+            return cachedResponse;
+        }
+        return offline;
     }
 }
 
