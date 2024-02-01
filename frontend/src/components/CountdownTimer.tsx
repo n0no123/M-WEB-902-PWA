@@ -75,6 +75,11 @@ export default function CountdownTimer({ minutes, title }: CountdownTimerProps) 
         return seconds < 10 ? `0${seconds}` : `${seconds}`;
     };
     
+    const clearVibrate = () => {
+        navigator.vibrate(0);
+        clearInterval(vibrateInterval);
+    }
+
     return (
         minutes === 0 ?
             <Typography sx={{ fontWeight: "bold" }} textAlign={"center"}>
@@ -90,7 +95,7 @@ export default function CountdownTimer({ minutes, title }: CountdownTimerProps) 
                 </Typography >
                 {
                     remainingTime.minutes === 0 && remainingTime.seconds === 0 ?
-                        <Button sx={{ width: '100px' }} onClick={() => { setVibrate(false); clearInterval(vibrateInterval); resetTimer(); }}>STOP</Button>
+                        <Button sx={{ width: '100px' }} onClick={() => { setVibrate(false); clearVibrate(); resetTimer(); }}>STOP</Button>
                         : <Typography textAlign={"center"}>{remainingTime.minutes}:{formatSeconds(remainingTime.seconds)}</Typography>
                 }
                 <Button sx={{ width: '100px' }} onClick={startTimer}>Start</Button>
