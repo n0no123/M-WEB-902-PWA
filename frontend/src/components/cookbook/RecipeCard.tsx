@@ -7,11 +7,10 @@ import { useNavigate } from "react-router-dom";
 import useGetRecipeById from '../../api/recipe/useGetRecipeById';
 
 type Props = {
-    image: string,
     recipeId: string,
 }
 
-export default function ActionAreaCard({ image, recipeId }: Props) {
+export default function ActionAreaCard({ recipeId }: Props) {
     const navigate = useNavigate();
     const hook = useGetRecipeById({ recipeId: recipeId });
 
@@ -21,7 +20,7 @@ export default function ActionAreaCard({ image, recipeId }: Props) {
                 <CardMedia
                     component="img"
                     height="140"
-                    image={image}
+                    image={hook.data?.image ? `${process.env.REACT_APP_API_URL}${hook.data?.image}` : '/assets/placeholder.png'}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">

@@ -10,8 +10,8 @@ import {
     IconButton,
     Typography, Alert
 } from "@mui/material";
-import React, {CSSProperties, useCallback, useEffect, useState} from "react";
-import {IngredientDto} from "../api/recipe/useCreateRecipe";
+import React, { CSSProperties, useCallback, useEffect, useState } from "react";
+import { IngredientDto } from "../api/recipe/useCreateRecipe";
 import useEditRecipe from "../api/recipe/useEditRecipe";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -41,8 +41,8 @@ type EditRecipeProps = {
     defaultValues: DefaultValuesDTO;
 }
 
-const EditRecipe = ({recipeId, defaultValues}: EditRecipeProps) => {
-    const {mutate, isLoading, isSuccess, isError, error: mutationError} = useEditRecipe();
+const EditRecipe = ({ recipeId, defaultValues }: EditRecipeProps) => {
+    const { mutate, isLoading, isSuccess, isError, error: mutationError } = useEditRecipe();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [currentlyEditedStep, setCurrentlyEditedStep] = useState<string>("");
     const [currentlyEditedIngredientQuantityWithUnit, setCurrentlyEditedIngredientQuantityWithUnit] = useState<string>("");
@@ -192,12 +192,12 @@ const EditRecipe = ({recipeId, defaultValues}: EditRecipeProps) => {
                                 setCurrentlyEditedIngredientName("");
                             }}
                         >
-                            <AddIcon/>
+                            <AddIcon />
                         </IconButton>
                     </Stack>
                     {
                         ingredients.map((ingredient, index) =>
-                            <Typography sx={styles.typography}>{index}. {ingredient.quantityWithUnit} {ingredient.name}</Typography>
+                            <Typography key={index} sx={styles.typography}>{index}. {ingredient.quantityWithUnit} {ingredient.name}</Typography>
                         )
                     }
                     <Divider>Steps</Divider>
@@ -219,11 +219,11 @@ const EditRecipe = ({recipeId, defaultValues}: EditRecipeProps) => {
                                 setCurrentlyEditedStep("");
                             }}
                         >
-                            <AddIcon/>
+                            <AddIcon />
                         </IconButton>
                     </Stack>
                     {
-                        steps.map((step, index) => <Typography  sx={styles.typography}>{index}. {step}</Typography>)
+                        steps.map((step, index) => <Typography key={index} sx={styles.typography}>{index}. {step}</Typography>)
                     }
                     <Divider>Tags</Divider>
                     <Stack spacing={2} direction={"row"}>
@@ -244,13 +244,13 @@ const EditRecipe = ({recipeId, defaultValues}: EditRecipeProps) => {
                                 setCurrentlyEditedTag("");
                             }}
                         >
-                            <AddIcon/>
+                            <AddIcon />
                         </IconButton>
                     </Stack>
-                    <Typography sx={styles.typography}>{ tags.join(", ") }</Typography>
+                    <Typography sx={styles.typography}>{tags.join(", ")}</Typography>
                     {
                         (error || mutationError) &&
-                        <Alert severity={"error"}>{ error ?? mutationError?.errorMessage }</Alert>
+                        <Alert severity={"error"}>{error ?? mutationError?.errorMessage}</Alert>
                     }
                 </Stack>
             </DialogContent>

@@ -34,7 +34,14 @@ function Cookbook() {
                 <Header />
                 <div className='centered' style={GridStyle}>
                     {
-                        (recipeIds ?? []).map((e, index) => <RecipeCard key={index} recipeId={e} image={'/assets/veloute-de-giraumon.jpg'} />)
+                        (
+                            recipeIds ?? []).map(
+                                (e, index) =>
+                                    <RecipeCard
+                                        key={index}
+                                        recipeId={e}
+                                    />
+                            )
                     }
                 </div>
             </div>

@@ -31,15 +31,16 @@ self.addEventListener('notificationclick', (event) => {
     event.waitUntil(self.clients.openWindow(event.notification.data.url));
 });
 
-const STATIC_CACHE_VERSION = 10;
+const STATIC_CACHE_VERSION = 1;
 const STATIC_CACHE = `static-cache-v${STATIC_CACHE_VERSION}`;
 const STATIC_CACHE_ASSETS = [
     '/',
     '/index.html',
     '/offline.html',
+    '/assets/placeholder.png'
 ];
 
-const DYNAMIC_CACHE_VERSION = 10;
+const DYNAMIC_CACHE_VERSION = 1;
 const DYNAMIC_CACHE = `dynamic-cache-v${DYNAMIC_CACHE_VERSION}`;
 const DYNAMIC_CACHE_BLACKLIST = [
     '/sign-in',

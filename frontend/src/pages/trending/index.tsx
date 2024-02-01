@@ -34,13 +34,13 @@ function Trending() {
       <div className='centered' style={GridStyle}>
         {
           (recipes ?? []).map(e =>
-              <RecipeCard
-                  key={e.id}
-                  id={e.id}
-                  image={`${process.env.REACT_APP_API_URL}${e.image}`}
-                  name={e.name}
-                  rating={e.avgRating}
-              />)
+            <RecipeCard
+              key={e.id}
+              id={e.id}
+              image={e.image ? `${process.env.REACT_APP_API_URL}${e.image}` : '/assets/placeholder.png'}
+              name={e.name}
+              rating={e.avgRating}
+            />)
         }
       </div>
       <Error open={open} message={message} setOpen={setOpen} setMessage={setMessage} />

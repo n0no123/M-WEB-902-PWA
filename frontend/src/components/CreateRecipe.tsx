@@ -1,6 +1,7 @@
 import useCreateRecipe, { IngredientDto } from "../api/recipe/useCreateRecipe";
 import {
     Alert,
+    Box,
     Button,
     Dialog,
     DialogActions,
@@ -124,10 +125,10 @@ const CreateRecipe = ({ isMobile }: Props) => {
         [isSuccess]
     );
     return <>
-    {
-        isDialogOpen &&
-        <AskForCameraPermission setCameraPermissionGranted={setIsCameraPermissionGranted} />
-    }
+        {
+            isDialogOpen &&
+            <AskForCameraPermission setCameraPermissionGranted={setIsCameraPermissionGranted} />
+        }
         <Dialog
             open={isDialogOpen}
             onClose={() => setIsDialogOpen(false)}
@@ -187,7 +188,7 @@ const CreateRecipe = ({ isMobile }: Props) => {
                     }}
                 />
                 <Divider>Steps</Divider>
-                <Stack direction={"row"} justifyContent={"space-between"}>
+                <Stack direction={"row"} justifyContent={"space-between"} gap={"1em"}>
                     <TextField
                         fullWidth
                         label={"Step"}
@@ -201,14 +202,16 @@ const CreateRecipe = ({ isMobile }: Props) => {
                         }}
                         onChange={e => setCurrentlyEditedStep(e.target.value)}
                     />
-                    <IconButton
-                        onClick={() => {
-                            setSteps([...steps, currentlyEditedStep]);
-                            setCurrentlyEditedStep("");
-                        }}
-                    >
-                        <AddIcon />
-                    </IconButton>
+                    <Box sx={{ alignItems: "center", display: "flex" }}>
+                        <IconButton
+                            onClick={() => {
+                                setSteps([...steps, currentlyEditedStep]);
+                                setCurrentlyEditedStep("");
+                            }}
+                        >
+                            <AddIcon />
+                        </IconButton>
+                    </Box>
                 </Stack>
                 {
                     steps.map((step, index) =>
@@ -276,18 +279,20 @@ const CreateRecipe = ({ isMobile }: Props) => {
                         }}
                         onChange={e => setCurrentlyEditedIngredientName(e.target.value)}
                     />
-                    <IconButton
-                        onClick={() => {
-                            setIngredients([...ingredients, {
-                                quantityWithUnit: currentlyEditedIngredientQuantityWithUnit,
-                                name: currentlyEditedIngredientName
-                            }]);
-                            setCurrentlyEditedIngredientQuantityWithUnit("");
-                            setCurrentlyEditedIngredientName("");
-                        }}
-                    >
-                        <AddIcon />
-                    </IconButton>
+                    <Box sx={{ alignItems: "center", display: "flex" }}>
+                        <IconButton
+                            onClick={() => {
+                                setIngredients([...ingredients, {
+                                    quantityWithUnit: currentlyEditedIngredientQuantityWithUnit,
+                                    name: currentlyEditedIngredientName
+                                }]);
+                                setCurrentlyEditedIngredientQuantityWithUnit("");
+                                setCurrentlyEditedIngredientName("");
+                            }}
+                        >
+                            <AddIcon />
+                        </IconButton>
+                    </Box>
                 </Stack>
                 {
                     ingredients.map((ingredient, index) =>
@@ -317,19 +322,31 @@ const CreateRecipe = ({ isMobile }: Props) => {
                     )
                 }
                 <Divider>Tags</Divider>
-                <TextField
-                    fullWidth
-                    label={"Tag"}
-                    value={currentlyEditedTag}
-                    onKeyDown={e => {
-                        if (e.key === "Enter") {
-                            e.preventDefault();
-                            setTags([...tags, currentlyEditedTag]);
-                            setCurrentlyEditedTag("");
-                        }
-                    }}
-                    onChange={e => setCurrentlyEditedTag(e.target.value)}
-                />
+                <Stack direction={"row"} justifyContent={"space-between"} gap={"1em"}>
+                    <TextField
+                        fullWidth
+                        label={"Tag"}
+                        value={currentlyEditedTag}
+                        onKeyDown={e => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                setTags([...tags, currentlyEditedTag]);
+                                setCurrentlyEditedTag("");
+                            }
+                        }}
+                        onChange={e => setCurrentlyEditedTag(e.target.value)}
+                    />
+                    <Box sx={{ alignItems: "center", display: "flex" }}>
+                        <IconButton
+                            onClick={() => {
+                                setTags([...tags, currentlyEditedTag]);
+                                setCurrentlyEditedTag("");
+                            }}
+                        >
+                            <AddIcon />
+                        </IconButton>
+                    </Box>
+                </Stack>
                 <Typography>
                     {tags.join(", ")}
                 </Typography>
@@ -361,12 +378,12 @@ const CreateRecipe = ({ isMobile }: Props) => {
                     Create
                 </Button>
             </DialogActions>
-        </Dialog>
+        </Dialog >
         {
             isMobile ?
                 <IconButton color="inherit" onClick={() => setIsDialogOpen(true)}>
-                    <AddCircleOutlineIcon />
-                </IconButton>
+                    < AddCircleOutlineIcon />
+                </IconButton >
                 :
                 <Button
                     color="inherit"

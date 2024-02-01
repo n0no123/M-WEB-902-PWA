@@ -22,7 +22,7 @@ export default function Header() {
 
     const {installationEvent, setInstallationEvent} = useInstallation();
 
-    useMemo(() => {
+    useEffect(() => {
         if (!isLoggedIn.data) {
             navigate('/sign-in');
         }

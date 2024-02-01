@@ -268,8 +268,9 @@ const VisualizeRecipe = () => {
                 <Divider>Ingredients</Divider>
                 {
                     data.ingredients.map(
-                        ingredient =>
+                        (ingredient, index) =>
                             <Typography
+                                key={index}
                                 sx={styles.wrappedTypography}
                             >
                                 {ingredient.quantityWithUnit} {ingredient.name}
@@ -313,7 +314,7 @@ const VisualizeRecipe = () => {
                 </Stack>
                 {
                     data.steps.map((step, index) =>
-                        <Stack>
+                        <Stack key={index}>
                             <Typography fontWeight={"600"}>STEP {index}</Typography>
                             <Typography sx={styles.wrappedTypography}>{step}</Typography>
                         </Stack>
