@@ -110,6 +110,7 @@ const styles: Record<string, CSSProperties> = {
         minHeight: "calc(100% - 4em)",
         backgroundColor: "var(--color-surface)",
         borderRadius: "1em",
+        paddingBottom: '64px',
     },
     name: {
         width: "100%",
