@@ -7,31 +7,32 @@ import { useNavigate } from "react-router-dom";
 import useGetRecipeById from '../../api/recipe/useGetRecipeById';
 
 type Props = {
-    image: string,
     recipeId: string,
 }
 
-export default function ActionAreaCard({ image, recipeId }: Props) {
+const ActionAreaCard = ({ recipeId }: Props) => {
     const navigate = useNavigate();
-    const hook = useGetRecipeById({ recipeId: recipeId });
+    const {data} = useGetRecipeById({ recipeId });
 
     return (
         <Card sx={{ width: '20em' }}>
-            <CardActionArea onClick={() => navigate(`/recipe/${hook.data?.id}`)}>
+            <CardActionArea onClick={() => navigate(`/recipe/${data?.id}`)}>
                 <CardMedia
                     component="img"
                     height="140"
-                    image={image}
+                    image={data?.image ? `${process.env.REACT_APP_API_URL}${data?.image}` : '/assets/placeholder.png'}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {hook.data?.name}
+                        {data?.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {hook.data?.avgRating ? `${hook.data?.avgRating} / 5` : "No rating yet"}
+                        {data?.avgRating ? `${data?.avgRating} / 5` : "No rating yet"}
                     </Typography>
                 </CardContent>
             </CardActionArea>
         </Card>
     );
 }
+
+export default ActionAreaCard;

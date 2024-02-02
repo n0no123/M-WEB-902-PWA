@@ -1,10 +1,18 @@
 :root {
-    --color-primary: #FF6F61;
-    --color-neutral-black: #000000;
-    --color-neutral-white: #FFFFFF;
-    --color-neutral-grey: #EFEFEF;
+    --color-primary: #006B57;
+    --color-secondary: #7D968D;
+    --color-tertiary: #7495AB;
+    
+    --color-error: #FFDAD6;
+    --color-on-error: #410002;
+    
+    --color-background: #FBFDFA;
+    --color-on-background: #191C1B;
+    --color-surface: #EEF5F1;
+    --color-on-surface: #191C1B;
+    
 }
 
 body {
-    background-color: var(--color-neutral-grey)
+    background-color: var(--color-background)
 }

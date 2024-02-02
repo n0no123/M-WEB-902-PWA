@@ -10,23 +10,14 @@ const GridStyle: CSSProperties = {
     gridTemplateColumns: 'repeat(auto-fit, minmax(21.5em, 1fr))',
     margin: 'auto',
     paddingTop: '2em',
+    paddingBottom: '6em',
     placeItems: 'center'
 }
 
 function Cookbook() {
     const [open, setOpen] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
-
-    const getCookBookRecipes = useGetCookBookRecipes();
-
-    const recipeIds = useMemo(() => {
-        if (getCookBookRecipes.isSuccess) {
-            return getCookBookRecipes.data.recipesIds;
-        } else if (getCookBookRecipes.isError) {
-            setOpen(true);
-            setMessage('An error has occured.');
-        }
-    }, [getCookBookRecipes]);
+    const {data} = useGetCookBookRecipes();
 
     return (
         <>
@@ -34,7 +25,13 @@ function Cookbook() {
                 <Header />
                 <div className='centered' style={GridStyle}>
                     {
-                        (recipeIds ?? []).map((e, index) => <RecipeCard key={index} recipeId={e} image={'/assets/veloute-de-giraumon.jpg'} />)
+                        (data?.recipesIds ?? []).map(
+                                recipeId =>
+                                    <RecipeCard
+                                        key={recipeId}
+                                        recipeId={recipeId}
+                                    />
+                            )
                     }
                 </div>
             </div>

@@ -78,7 +78,6 @@ router.put(
     upload.single("image"),
     parseAuthorizationHeader(false),
     async (req, res) => {
-        console.log(req);
         const parsedParams = z.object({
             name: z.string(),
             description: z.string(),
@@ -112,7 +111,7 @@ router.put(
                         res.status(result.status).send(result.errorMessage);
                     }
                 } catch (e) {
-                    console.error(e);
+                    console.log(e);
                     res.status(500).send();
                 }
             } else {
@@ -136,7 +135,7 @@ router.get(
                 res.status(result.status).send(result.errorMessage);
             }
         } catch (e) {
-            console.error(e);
+            console.log(e);
             res.status(500).send();
         }
     }
@@ -160,7 +159,7 @@ router.get(
                     res.status(result.status).send(result.errorMessage);
                 }
             } catch (e) {
-                console.error(e);
+                console.log(e);
                 res.status(500).send();
             }
 
@@ -213,7 +212,7 @@ router.put(
                     res.status(result.status).send(result.errorMessage);
                 }
             } catch (e) {
-                console.error(e);
+                console.log(e);
                 res.status(500).send();
             }
 
@@ -235,7 +234,7 @@ router.put(
             id: z.string().uuid(),
         }).safeParse(req.params);
         const parsedBody = z.object({
-            rating: z.number().min(1).max(5),
+            rating: z.number().min(0).max(5),
         }).safeParse(req.body);
 
         if (parsedQuery.success && parsedBody.success) {
@@ -248,7 +247,7 @@ router.put(
                     res.status(result.status).send(result.errorMessage);
                 }
             } catch (e) {
-                console.error(e);
+                console.log(e);
                 res.status(500).send();
             }
 

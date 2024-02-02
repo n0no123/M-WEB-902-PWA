@@ -26,7 +26,7 @@ router.put(
                     res.status(result.status).send(result.errorMessage);
                 }
             } catch (e) {
-                console.error(e);
+                console.log(e);
                 res.status(500).send();
             }
         } else {
@@ -53,7 +53,7 @@ router.delete(
                     res.status(result.status).send(result.errorMessage);
                 }
             } catch (e) {
-                console.error(e);
+                console.log(e);
                 res.status(500).send();
             }
         } else {
@@ -75,7 +75,7 @@ router.get(
                 res.status(result.status).send(result.errorMessage);
             }
         } catch (e) {
-            console.error(e);
+            console.log(e);
             res.status(500).send();
         }
     }

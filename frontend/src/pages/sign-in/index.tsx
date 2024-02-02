@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import CssBaseline from '@mui/material/CssBaseline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import useLogin from '../../api/account/useLogin';
@@ -47,7 +46,6 @@ export default function SignIn() {
         <>
             <AskForInstallation />
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
                 <Box
                     sx={{
                         marginTop: 8,
@@ -56,7 +54,7 @@ export default function SignIn() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ mt: '2em', bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
@@ -91,7 +89,7 @@ export default function SignIn() {
                         >
                             Sign In
                         </Button>
-                        <Grid container>
+                        <Grid container sx={{ mb: '2em' }}>
                             <Grid item>
                                 <Link href="/sign-up" variant="body2">
                                     {"Don't have an account yet? Sign Up"}

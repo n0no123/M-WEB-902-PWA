@@ -1,8 +1,8 @@
-import {User} from "../../models/user";
-import {EndpointReturn} from "../_misc/endpoint-return";
+import { User } from "../../models/user";
+import { EndpointReturn } from "../_misc/endpoint-return";
 import datasource from "../../misc/datasource";
-import {Recipe} from "../../models/recipe";
-import {Rating} from "../../models/rating";
+import { Recipe } from "../../models/recipe";
+import { Rating } from "../../models/rating";
 import pushNotificationProvider from "../../providers/push-notification";
 
 type Params = {
@@ -14,11 +14,10 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
     const ratingRepository = datasource.getRepository(Rating);
     const recipeRepository = datasource.getRepository(Recipe);
     const recipe = await recipeRepository.findOne({
-        where: {id: params.recipeId },
+        where: { id: params.recipeId },
         relations: ["owner"]
     });
     const pushNotification = pushNotificationProvider();
-
     if (!recipe) {
         return {
             status: 404,
@@ -45,7 +44,6 @@ const rate = async (params: Params, user: User): Promise<EndpointReturn<never>> 
         url: '/recipe/' + recipe.id,
         title: 'One of your recipe has been rated!',
     })
-
     return {
         status: 200
     }

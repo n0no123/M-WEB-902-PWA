@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useLogout from '../api/account/useLogout';
-import { AppBar, Button, IconButton, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import CreateRecipe from './CreateRecipe';
 import useIsLoggedIn from "../api/account/useIsLoggedIn";
 import WhatshotIcon from '@mui/icons-material/Whatshot';
@@ -20,9 +20,9 @@ export default function Header() {
     const logout = useLogout();
     const isLoggedIn = useIsLoggedIn()
 
-    const {installationEvent, setInstallationEvent} = useInstallation();
+    const { installationEvent, setInstallationEvent } = useInstallation();
 
-    useMemo(() => {
+    useEffect(() => {
         if (!isLoggedIn.data) {
             navigate('/sign-in');
         }
@@ -47,7 +47,7 @@ export default function Header() {
 
     return (
         isMobile ?
-            <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
+            <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0, height: '60px' }}>
                 <Toolbar sx={{ justifyContent: 'space-around' }}>
                     {
                         canInstall &&
@@ -67,7 +67,7 @@ export default function Header() {
             :
             <AppBar position="static" onSubmit={signOut}>
                 <Toolbar sx={{ gap: '1%' }}>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white' }}>
                         UN PEU MOINS D'UN KILO
                     </Typography>
                     {
