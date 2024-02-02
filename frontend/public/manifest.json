@@ -67,6 +67,18 @@
       "sizes": "1080x2134",
       "type": "image/png",
       "description": "A screenshot of create recipe modal"
+    },
+    {
+      "src": "assets/screenshots/screenshot_03.png",
+      "sizes": "1080x2134",
+      "type": "image/png",
+      "description": "A screenshot of the recipe page (1)"
+    },
+    {
+      "src": "assets/screenshots/screenshot_04.png",
+      "sizes": "1080x2134",
+      "type": "image/png",
+      "description": "A screenshot of the recipe page (2)"
     }
   ]
 }
