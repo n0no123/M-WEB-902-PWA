@@ -9,6 +9,7 @@ import CookieIcon from '@mui/icons-material/Cookie';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useInstallation } from "../utils/InstallationContext";
+import { useAuthentication } from "../utils/AuthenticationContext";
 
 export default function Header() {
     const location = useLocation();
