@@ -18,15 +18,15 @@ export default function Header() {
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     const logout = useLogout();
-    const isLoggedIn = useIsLoggedIn()
+    const { token } = useAuthentication();
 
     const { installationEvent, setInstallationEvent } = useInstallation();
 
     useEffect(() => {
-        if (!isLoggedIn.data) {
+        if (token === null) {
             navigate('/sign-in');
         }
-    }, [isLoggedIn, navigate]);
+    }, [token, navigate]);
 
     const signOut = useCallback(() => {
         logout.mutate();
